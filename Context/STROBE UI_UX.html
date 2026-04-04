@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STROBE — Design System v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #FAFAF8;
+  --off-white: #F2F1EE;
+  --warm-grey: #E8E6E1;
+  --mid-grey: #B8B5AE;
+  --text-light: #8A8680;
+  --text-main: #2A2926;
+  --text-dark: #141311;
+  --electric: #0057FF;
+  --electric-hover: #0048d9;
+  --electric-muted: rgba(0,87,255,0.07);
+  --electric-border: rgba(0,87,255,0.18);
+  --border: #E0DED9;
+  --sidebar-w: 240px;
+  --nav-h: 52px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--white);
+  color: var(--text-main);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--nav-h);
+  background: rgba(250,250,248,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 24px 0 0;
+}
+.topbar-brand {
+  width: var(--sidebar-w);
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--text-dark);
+  border-right: 1px solid var(--border);
+  height: 100%;
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.topbar-brand-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--electric); }
+.topbar-right {
+  flex: 1; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.topbar-version {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--electric); font-weight: 500;
+}
+.topbar-meta { font-size: 11px; color: var(--text-light); }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  position: fixed; top: var(--nav-h); left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 100;
+  padding: 20px 0 40px;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.sidebar-section-label {
+  font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--mid-grey); padding: 20px 20px 8px; font-weight: 600;
+}
+.sidebar-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 20px;
+  font-size: 13px; font-weight: 400; color: var(--text-light);
+  cursor: pointer; transition: all 0.15s;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+}
+.sidebar-link:hover { color: var(--text-dark); background: var(--off-white); }
+.sidebar-link.active { color: var(--electric); font-weight: 600; border-left-color: var(--electric); background: var(--electric-muted); }
+.sidebar-link svg { flex-shrink: 0; opacity: 0.5; }
+.sidebar-link.active svg { opacity: 1; color: var(--electric); }
+
+/* ── MAIN ── */
+.main {
+  margin-left: var(--sidebar-w);
+  padding-top: var(--nav-h);
+  min-height: 100vh;
+}
+
+/* ── PAGES ── */
+.page { display: none; padding: 56px 64px 96px; max-width: 1100px; }
+.page.active { display: block; }
+
+.page-eyebrow {
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--electric); margin-bottom: 10px; font-weight: 600;
+}
+.page-title {
+  font-size: clamp(32px, 4vw, 52px); font-weight: 300;
+  letter-spacing: -0.025em; line-height: 1.05;
+  color: var(--text-dark); margin-bottom: 16px;
+}
+.page-title strong { font-weight: 700; }
+.page-desc {
+  font-size: 15px; color: var(--text-light); font-weight: 300;
+  max-width: 520px; margin-bottom: 56px; line-height: 1.7;
+}
+.section-rule { height: 1px; background: var(--border); margin: 48px 0; }
+.sub-heading {
+  font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+  color: var(--text-dark); margin-bottom: 20px; margin-top: 40px;
+  text-transform: uppercase; letter-spacing: 0.1em; font-size: 11px;
+}
+.sub-heading:first-child { margin-top: 0; }
+
+/* ── LOGO SVG ── */
+.logo-svg-strobe {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 0.14em;
+}
+
+/* ── LOGO SECTION ── */
+.logo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.logo-card {
+  border-radius: 10px; border: 1px solid var(--border);
+  overflow: hidden;
+}
+.logo-display {
+  height: 140px;
+  display: flex; align-items: center; justify-content: center;
+}
+.logo-card-meta {
+  padding: 12px 16px; border-top: 1px solid var(--border);
+  font-size: 11px;
+}
+.logo-card-name { font-weight: 600; color: var(--text-dark); }
+.logo-card-use { color: var(--text-light); margin-top: 2px; }
+
+/* LOGO MARK */
+.logomark {
+  display: flex; align-items: center; gap: 10px;
+}
+.logomark-icon {
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.logomark-wordmark {
+  font-weight: 700; letter-spacing: 0.16em;
+}
+
+/* ── APP ICON ── */
+.app-icon-grid { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+.app-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.app-icon-label { font-size: 11px; color: var(--text-light); text-align: center; }
+
+.app-icon {
+  border-radius: 22.4%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ── COLOURS ── */
+.color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 12px; }
+.color-swatch { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.swatch-block { height: 88px; }
+.swatch-info { padding: 10px 12px; }
+.swatch-name { font-size: 12px; font-weight: 600; color: var(--text-dark); }
+.swatch-hex { font-size: 11px; color: var(--text-light); letter-spacing: 0.06em; margin-top: 1px; font-family: monospace; }
+.swatch-role { font-size: 10px; color: var(--mid-grey); margin-top: 3px; }
+
+/* ── TYPOGRAPHY ── */
+.type-row {
+  display: grid; grid-template-columns: 180px 1fr;
+  gap: 32px; align-items: baseline;
+  padding: 24px 0; border-bottom: 1px solid var(--border);
+}
+.type-row:last-child { border-bottom: none; }
+.type-meta-col { }
+.type-meta-name { font-size: 12px; font-weight: 600; color: var(--text-dark); }
+.type-meta-spec { font-size: 11px; color: var(--text-light); margin-top: 4px; line-height: 1.8; font-family: monospace; }
+
+/* ── SPACING ── */
+.space-table { width: 100%; border-collapse: collapse; }
+.space-table th {
+  text-align: left; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-light); padding: 8px 16px; border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+.space-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
+.space-table tr:last-child td { border-bottom: none; }
+.space-bar { height: 4px; background: var(--text-dark); border-radius: 2px; display: inline-block; }
+.space-name { font-weight: 500; color: var(--text-dark); }
+.space-val { color: var(--text-light); font-family: monospace; font-size: 12px; }
+.space-use { color: var(--text-light); font-size: 12px; }
+
+.grid-demo {
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 24px;
+}
+.grid-bar { background: var(--off-white); padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 11px; color: var(--text-light); letter-spacing: 0.06em; text-transform: uppercase; }
+.grid-visual { padding: 20px; display: grid; gap: 8px; }
+.grid-col { height: 32px; background: var(--electric-muted); border: 1px solid var(--electric-border); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--electric); font-weight: 600; }
+
+/* ── BUTTONS ── */
+.btn-showcase { display: flex; flex-direction: column; gap: 32px; }
+.btn-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.btn-row-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); width: 80px; flex-shrink: 0; font-weight: 600; }
+.btn {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  cursor: pointer; border: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: all 0.2s ease;
+}
+.btn-primary { background: var(--text-dark); color: var(--white); padding: 13px 24px; border-radius: 4px; }
+.btn-primary:hover { background: var(--text-main); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(20,19,17,0.15); }
+.btn-accent { background: var(--electric); color: #fff; padding: 13px 24px; border-radius: 4px; }
+.btn-accent:hover { background: var(--electric-hover); box-shadow: 0 4px 18px rgba(0,87,255,0.28); }
+.btn-outline { background: transparent; color: var(--text-dark); padding: 12px 23px; border-radius: 4px; border: 1px solid var(--border); }
+.btn-outline:hover { border-color: var(--text-dark); }
+.btn-ghost { background: transparent; color: var(--text-light); padding: 10px 12px; border-radius: 4px; font-size: 12px; }
+.btn-ghost:hover { color: var(--text-dark); background: var(--off-white); }
+.btn-pill-s { background: var(--off-white); color: var(--text-main); padding: 8px 16px; border-radius: 100px; border: 1px solid var(--border); font-size: 11px; }
+.btn-pill-s.a { background: var(--text-dark); color: var(--white); border-color: var(--text-dark); }
+.btn-sm { padding: 9px 16px; font-size: 11px; }
+.btn-lg { padding: 16px 32px; font-size: 13px; }
+.btn-icon { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; background: var(--off-white); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+.btn-icon:hover { border-color: var(--text-dark); }
+.btn-icon svg { width: 16px; height: 16px; }
+
+/* ── FORM INPUTS ── */
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 640px; }
+.fg { display: flex; flex-direction: column; gap: 7px; }
+.fl { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); }
+.fi {
+  font-family: 'Space Grotesk', sans-serif; font-size: 14px;
+  padding: 11px 14px; border: 1px solid var(--border); border-radius: 4px;
+  background: var(--white); color: var(--text-dark); outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s; width: 100%;
+}
+.fi:focus { border-color: var(--electric); box-shadow: 0 0 0 3px var(--electric-muted); }
+.fi::placeholder { color: var(--mid-grey); }
+.fi.error { border-color: #E53E3E; }
+.fi.success { border-color: #38A169; }
+.fi-help { font-size: 11px; color: var(--text-light); }
+.fi-help.error { color: #E53E3E; }
+.fi-help.success { color: #38A169; }
+.fselect {
+  font-family: 'Space Grotesk', sans-serif; font-size: 14px;
+  padding: 11px 36px 11px 14px; border: 1px solid var(--border); border-radius: 4px;
+  background: var(--white); color: var(--text-dark); outline: none;
+  appearance: none; width: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238A8680' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+}
+
+/* ── CARDS ── */
+.card-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--white); transition: box-shadow 0.22s, transform 0.22s; }
+.card:hover { box-shadow: 0 8px 32px rgba(20,19,17,0.1); transform: translateY(-2px); }
+.card-img { aspect-ratio: 3/4; background: var(--warm-grey); position: relative; display: flex; align-items: center; justify-content: center; }
+.card-img-placeholder { width: 48%; height: 48%; background: var(--mid-grey); border-radius: 6px; opacity: 0.35; }
+.card-badge { position: absolute; top: 10px; left: 10px; padding: 3px 10px; border-radius: 100px; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.badge-new { background: var(--electric-muted); color: var(--electric); border: 1px solid var(--electric-border); }
+.badge-sale { background: var(--text-dark); color: var(--white); }
+.card-save { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; background: rgba(250,250,248,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.card-save svg { width: 14px; height: 14px; stroke: var(--text-light); fill: none; }
+.card-body { padding: 14px; }
+.card-brand-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-light); margin-bottom: 3px; }
+.card-title { font-size: 13px; font-weight: 500; color: var(--text-dark); margin-bottom: 8px; }
+.card-row { display: flex; justify-content: space-between; align-items: center; }
+.card-price { font-size: 14px; font-weight: 600; color: var(--text-dark); }
+.card-price-orig { font-size: 12px; text-decoration: line-through; color: var(--text-light); }
+.card-price-sale { font-size: 14px; font-weight: 600; color: #C0392B; }
+.size-dots { display: flex; gap: 3px; }
+.size-dot { width: 18px; height: 18px; border-radius: 50%; border: 1px solid var(--border); font-size: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-light); }
+
+/* ── BADGES ── */
+.badge-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 11px; border-radius: 100px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.badge-default { background: var(--off-white); color: var(--text-main); border: 1px solid var(--border); }
+.badge-primary { background: var(--text-dark); color: var(--white); }
+.badge-accent { background: var(--electric-muted); color: var(--electric); border: 1px solid var(--electric-border); }
+.badge-success { background: #F0FAF5; color: #276749; border: 1px solid #C6F6D5; }
+.badge-warn { background: #FFFBEB; color: #975A16; border: 1px solid #FAF089; }
+.badge-error { background: #FFF5F5; color: #C53030; border: 1px solid #FED7D7; }
+.badge-info { background: #EBF8FF; color: #2B6CB0; border: 1px solid #BEE3F8; }
+.badge-xs { padding: 2px 7px; font-size: 9px; }
+.badge-lg { padding: 6px 14px; font-size: 13px; }
+
+/* ── ALERTS ── */
+.alert {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 18px; border-radius: 6px; border: 1px solid;
+  margin-bottom: 10px;
+}
+.alert svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; }
+.alert-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.alert-msg { font-size: 12px; opacity: 0.8; }
+.alert-default { background: var(--white); border-color: var(--border); color: var(--text-dark); box-shadow: 0 2px 8px rgba(20,19,17,0.07); }
+.alert-success { background: #F0FAF5; border-color: #9AE6B4; color: #276749; }
+.alert-accent { background: var(--electric-muted); border-color: var(--electric-border); color: var(--electric); }
+.alert-warn { background: #FFFBEB; border-color: #F6E05E; color: #975A16; }
+.alert-error { background: #FFF5F5; border-color: #FEB2B2; color: #C53030; }
+
+/* ── COMPONENTS ── */
+.comp-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+/* Toggle */
+.toggle { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.toggle-track {
+  width: 44px; height: 24px; border-radius: 12px; position: relative;
+  transition: background 0.2s; flex-shrink: 0;
+}
+.toggle-track.off { background: var(--warm-grey); }
+.toggle-track.on { background: var(--electric); }
+.toggle-thumb {
+  position: absolute; width: 18px; height: 18px;
+  background: white; border-radius: 50%;
+  top: 3px; transition: left 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.toggle-track.off .toggle-thumb { left: 3px; }
+.toggle-track.on .toggle-thumb { left: 23px; }
+.toggle-label { font-size: 13px; color: var(--text-main); }
+
+/* Radio / Checkbox */
+.check-row { display: flex; flex-direction: column; gap: 10px; }
+.check-item { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 13px; color: var(--text-main); }
+.check-box {
+  width: 18px; height: 18px; border: 1.5px solid var(--border); border-radius: 4px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  background: var(--white); transition: all 0.15s;
+}
+.check-box.checked { background: var(--text-dark); border-color: var(--text-dark); }
+.check-box.checked svg { display: block; }
+.check-box svg { display: none; width: 10px; height: 10px; stroke: white; fill: none; }
+.radio-circle { width: 18px; height: 18px; border: 1.5px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.radio-circle.checked { border-color: var(--electric); }
+.radio-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--electric); display: none; }
+.radio-circle.checked .radio-dot { display: block; }
+
+/* Slider */
+.slider-wrap { max-width: 280px; }
+.slider { -webkit-appearance: none; width: 100%; height: 4px; border-radius: 2px; background: linear-gradient(to right, var(--text-dark) 60%, var(--warm-grey) 60%); outline: none; }
+.slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--text-dark); cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+
+/* Tabs */
+.tab-bar { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+.tab-item {
+  padding: 10px 20px; font-size: 13px; font-weight: 500;
+  color: var(--text-light); cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: all 0.15s;
+}
+.tab-item:hover { color: var(--text-dark); }
+.tab-item.active { color: var(--text-dark); border-bottom-color: var(--text-dark); }
+.tab-item.active-blue { color: var(--electric); border-bottom-color: var(--electric); }
+
+/* Progress */
+.progress-wrap { max-width: 320px; }
+.progress-bar { height: 4px; background: var(--warm-grey); border-radius: 2px; overflow: hidden; margin-bottom: 8px; }
+.progress-fill { height: 100%; border-radius: 2px; }
+.progress-label { font-size: 11px; color: var(--text-light); display: flex; justify-content: space-between; }
+
+/* ── MOTION ── */
+.motion-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.motion-card {
+  padding: 20px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--white);
+}
+.motion-card-title { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+.motion-card-desc { font-size: 12px; color: var(--text-light); margin-bottom: 12px; line-height: 1.6; }
+.motion-demo {
+  height: 48px; background: var(--off-white); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--text-light); cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: background 0.2s;
+}
+.motion-demo:hover { background: var(--warm-grey); }
+.motion-token { font-family: monospace; font-size: 11px; color: var(--electric); margin-top: 8px; }
+
+/* ── ALL TOKENS ── */
+.token-table { width: 100%; border-collapse: collapse; }
+.token-table th { text-align: left; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); padding: 8px 12px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.token-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 12px; vertical-align: middle; }
+.token-table tr:last-child td { border-bottom: none; }
+.token-name { font-family: monospace; color: var(--electric); }
+.token-val { font-family: monospace; color: var(--text-main); }
+.token-desc { color: var(--text-light); }
+.token-swatch { width: 20px; height: 20px; border-radius: 4px; border: 1px solid var(--border); display: inline-block; vertical-align: middle; }
+.token-group { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-light); font-weight: 700; padding: 16px 12px 6px; }
+
+/* ── NEVER CHANGE ── */
+.never-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.never-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px; border: 1px solid #FEB2B2;
+  background: #FFF5F5; border-radius: 8px;
+}
+.never-x { width: 22px; height: 22px; background: #C53030; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: white; font-size: 11px; font-weight: 700; }
+.never-text { font-size: 13px; color: #742A2A; line-height: 1.5; }
+.never-text strong { display: block; font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+
+/* ── ICONS SECTION ── */
+.icon-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+.icon-cell {
+  aspect-ratio: 1; border: 1px solid var(--border); border-radius: 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; padding: 12px 6px; cursor: pointer; transition: background 0.15s;
+}
+.icon-cell:hover { background: var(--off-white); }
+.icon-cell svg { width: 20px; height: 20px; stroke: #5C5A57; fill: none; stroke-width: 1.5; }
+.icon-cell-label { font-size: 9px; color: var(--text-light); text-align: center; line-height: 1.2; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.page.active { animation: fadeIn 0.2s ease; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .main { margin-left: 0; }
+  .topbar-brand { width: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-brand-dot"></div>
+    STROBE
+  </div>
+  <div class="topbar-right">
+    <span class="topbar-version">Design System V1.0</span>
+    <span class="topbar-meta">Androgynous Fashion Platform</span>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-section-label">Identity</div>
+  <a class="sidebar-link active" onclick="showPage('logo')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="12" height="12" rx="2"/><path d="M4 7h6M7 4v6"/></svg>
+    Logo
+  </a>
+  <a class="sidebar-link" onclick="showPage('appicon')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="10" height="10" rx="2.5"/><circle cx="7" cy="7" r="2"/></svg>
+    App Icon
+  </a>
+
+  <div class="sidebar-section-label">Foundations</div>
+  <a class="sidebar-link" onclick="showPage('colours')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M7 2v5l3 3"/></svg>
+    Colours
+  </a>
+  <a class="sidebar-link" onclick="showPage('typography')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h10M7 3v8M4 11h6"/></svg>
+    Typography
+  </a>
+  <a class="sidebar-link" onclick="showPage('spacing')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2v10M12 2v10M4 7h6"/></svg>
+    Spacing &amp; Grid
+  </a>
+  <a class="sidebar-link" onclick="showPage('icons')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5" cy="5" r="3"/><circle cx="9" cy="9" r="3"/></svg>
+    Icons
+  </a>
+
+  <div class="sidebar-section-label">Components</div>
+  <a class="sidebar-link" onclick="showPage('buttons')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="4" width="11" height="6" rx="2"/></svg>
+    Buttons
+  </a>
+  <a class="sidebar-link" onclick="showPage('forminputs')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="4" width="11" height="6" rx="1.5"/><path d="M4 7h1"/></svg>
+    Form Inputs
+  </a>
+  <a class="sidebar-link" onclick="showPage('cards')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="11" height="11" rx="2.5"/><path d="M1.5 5.5h11"/></svg>
+    Cards
+  </a>
+  <a class="sidebar-link" onclick="showPage('badges')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z"/></svg>
+    Badges
+  </a>
+  <a class="sidebar-link" onclick="showPage('alerts')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 1L13 12H1L7 1z"/><path d="M7 6v3M7 10.5v.5"/></svg>
+    Alerts
+  </a>
+  <a class="sidebar-link" onclick="showPage('components')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="1.5" width="4.5" height="4.5" rx="1"/><rect x="8" y="1.5" width="4.5" height="4.5" rx="1"/><rect x="1.5" y="8" width="4.5" height="4.5" rx="1"/><rect x="8" y="8" width="4.5" height="4.5" rx="1"/></svg>
+    Components
+  </a>
+
+  <div class="sidebar-section-label">Guidelines</div>
+  <a class="sidebar-link" onclick="showPage('motion')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 7c0-2.8 2.2-5 5-5s5 2.2 5 5-2.2 5-5 5"/><path d="M9 7H5M7 5l2 2-2 2"/></svg>
+    Motion
+  </a>
+  <a class="sidebar-link" onclick="showPage('alltokens')">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h10M2 7h10M2 10h6"/></svg>
+    All Tokens
+  </a>
+  <a class="sidebar-link" onclick="showPage('neverchange')" style="color:#C53030; border-left-color:transparent;">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#C53030" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M4.5 4.5l5 5M9.5 4.5l-5 5"/></svg>
+    Never Change
+  </a>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ══════════════════════════════════
+     PAGE: LOGO
+══════════════════════════════════ -->
+<div class="page active" id="page-logo">
+  <div class="page-eyebrow">01 · Identity</div>
+  <h1 class="page-title">Logo<strong>.</strong></h1>
+  <p class="page-desc">The STROBE wordmark is the primary brand asset. Use it with care, consistency, and appropriate clear space at all times.</p>
+
+  <div class="sub-heading">Primary Wordmark</div>
+  <div class="logo-grid">
+    <!-- Light -->
+    <div class="logo-card">
+      <div class="logo-display" style="background:#FAFAF8;">
+        <div class="logomark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#141311"/>
+            <path d="M16 4L8 15h6l-2 9 10-13h-7z" fill="white"/>
+          </svg>
+          <span class="logomark-wordmark" style="font-size:22px; letter-spacing:0.16em; color:#141311;">STROBE</span>
+        </div>
+      </div>
+      <div class="logo-card-meta">
+        <div class="logo-card-name">Light Background</div>
+        <div class="logo-card-use">Primary usage on white/off-white</div>
+      </div>
+    </div>
+    <!-- Dark -->
+    <div class="logo-card">
+      <div class="logo-display" style="background:#141311;">
+        <div class="logomark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="white" fill-opacity="0.12"/>
+            <path d="M16 4L8 15h6l-2 9 10-13h-7z" fill="white"/>
+          </svg>
+          <span class="logomark-wordmark" style="font-size:22px; letter-spacing:0.16em; color:white;">STROBE</span>
+        </div>
+      </div>
+      <div class="logo-card-meta">
+        <div class="logo-card-name">Dark Background</div>
+        <div class="logo-card-use">Reversed on dark surfaces</div>
+      </div>
+    </div>
+    <!-- Electric -->
+    <div class="logo-card">
+      <div class="logo-display" style="background:#EEF3FF;">
+        <div class="logomark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#0057FF"/>
+            <path d="M16 4L8 15h6l-2 9 10-13h-7z" fill="white"/>
+          </svg>
+          <span class="logomark-wordmark" style="font-size:22px; letter-spacing:0.16em; color:#0057FF;">STROBE</span>
+        </div>
+      </div>
+      <div class="logo-card-meta">
+        <div class="logo-card-name">Accent Variant</div>
+        <div class="logo-card-use">Electric blue — use sparingly</div>
+      </div>
+    </div>
+    <!-- Monochrome -->
+    <div class="logo-card">
+      <div class="logo-display" style="background:#F2F1EE;">
+        <div class="logomark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#8A8680"/>
+            <path d="M16 4L8 15h6l-2 9 10-13h-7z" fill="white"/>
+          </svg>
+          <span class="logomark-wordmark" style="font-size:22px; letter-spacing:0.16em; color:#8A8680;">STROBE</span>
+        </div>
+      </div>
+      <div class="logo-card-meta">
+        <div class="logo-card-name">Monochrome</div>
+        <div class="logo-card-use">Grayscale print / watermark use</div>
+      </div>
+    </div>
+    <!-- Wordmark only -->
+    <div class="logo-card">
+      <div class="logo-display" style="background:#FAFAF8;">
+        <span style="font-size:26px; font-weight:700; letter-spacing:0.2em; color:#141311;">STROBE</span>
+      </div>
+      <div class="logo-card-meta">
+        <div class="logo-card-name">Wordmark Only</div>
+        <div class="logo-card-use">When logomark conflicts with bg</div>
+      </div>
+    </div>
+    <!-- Icon only -->
+    <div class="logo-card">
+      <div class="logo-display" style="background:#FAFAF8;">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect width="48" height="48" rx="12" fill="#141311"/>
+          <path d="M30 6L14 26h12l-4 16 20-22h-14z" fill="white"/>
+        </svg>
+      </div>
+      <div class="logo-card-meta">
+        <div class="logo-card-name">Icon Mark</div>
+        <div class="logo-card-use">Favicon, app icon, avatar</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+  <div class="sub-heading">Logo Clearspace</div>
+  <div style="padding:32px; border:1px solid var(--border); border-radius:8px; display:inline-block; max-width:400px;">
+    <div style="border:1.5px dashed var(--electric-border); border-radius:6px; padding:24px; display:inline-block; position:relative;">
+      <div style="position:absolute; top:4px; left:50%; transform:translateX(-50%); font-size:9px; color:var(--electric); letter-spacing:0.1em; white-space:nowrap;">min. 16px</div>
+      <div class="logomark">
+        <svg width="24" height="24" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="7" fill="#141311"/><path d="M16 4L8 15h6l-2 9 10-13h-7z" fill="white"/></svg>
+        <span style="font-weight:700; font-size:18px; letter-spacing:0.16em; color:#141311;">STROBE</span>
+      </div>
+    </div>
+    <div style="font-size:11px; color:var(--text-light); margin-top:12px;">Minimum clearspace = height of the "S" on all sides</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: APP ICON
+══════════════════════════════════ -->
+<div class="page" id="page-appicon">
+  <div class="page-eyebrow">02 · Identity</div>
+  <h1 class="page-title">App<strong> Icon.</strong></h1>
+  <p class="page-desc">The STROBE app icon uses the geometric diamond mark on a solid background. Supplied in five colour variants and three sizes.</p>
+
+  <div class="sub-heading">Icon Variants</div>
+  <div class="app-icon-grid">
+    <!-- Ink -->
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:96px;height:96px;background:#141311;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="white"/>
+        </svg>
+      </div>
+      <div class="app-icon-label">Ink<br><span style="font-family:monospace;font-size:10px;">#141311</span></div>
+    </div>
+    <!-- Electric -->
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:96px;height:96px;background:#0057FF;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="white"/>
+        </svg>
+      </div>
+      <div class="app-icon-label">Electric<br><span style="font-family:monospace;font-size:10px;">#0057FF</span></div>
+    </div>
+    <!-- White -->
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:96px;height:96px;background:#FAFAF8;border:1px solid var(--border);">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="#141311"/>
+        </svg>
+      </div>
+      <div class="app-icon-label">Canvas<br><span style="font-family:monospace;font-size:10px;">#FAFAF8</span></div>
+    </div>
+    <!-- Ash -->
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:96px;height:96px;background:#8A8680;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="white"/>
+        </svg>
+      </div>
+      <div class="app-icon-label">Ash<br><span style="font-family:monospace;font-size:10px;">#8A8680</span></div>
+    </div>
+    <!-- Parchment dark -->
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:96px;height:96px;background:#E8E6E1;">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="#2A2926"/>
+        </svg>
+      </div>
+      <div class="app-icon-label">Parchment<br><span style="font-family:monospace;font-size:10px;">#E8E6E1</span></div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+  <div class="sub-heading">Size Guide</div>
+  <div style="display:flex; gap:24px; align-items:flex-end;">
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:120px;height:120px;background:#141311;">
+        <svg width="64" height="64" viewBox="0 0 52 52" fill="none"><path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="white"/></svg>
+      </div>
+      <div class="app-icon-label">1024×1024<br>App Store</div>
+    </div>
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:80px;height:80px;background:#141311;">
+        <svg width="44" height="44" viewBox="0 0 52 52" fill="none"><path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="white"/></svg>
+      </div>
+      <div class="app-icon-label">180×180<br>iPhone</div>
+    </div>
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:56px;height:56px;background:#141311;">
+        <svg width="30" height="30" viewBox="0 0 52 52" fill="none"><path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="white"/></svg>
+      </div>
+      <div class="app-icon-label">128×128<br>macOS</div>
+    </div>
+    <div class="app-icon-wrap">
+      <div class="app-icon" style="width:32px;height:32px;background:#141311;">
+        <svg width="18" height="18" viewBox="0 0 52 52" fill="none"><path d="M32 8L16 28h12l-4 16 20-24h-14z" fill="white"/></svg>
+      </div>
+      <div class="app-icon-label">32×32<br>Favicon</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: COLOURS
+══════════════════════════════════ -->
+<div class="page" id="page-colours">
+  <div class="page-eyebrow">03 · Foundations</div>
+  <h1 class="page-title">Colours<strong>.</strong></h1>
+  <p class="page-desc">A warm-neutral palette with a single electric accent. Restraint is the principle — Electric Blue appears only where it earns its place.</p>
+
+  <div class="sub-heading">Core Palette</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="swatch-block" style="background:#141311;"></div><div class="swatch-info"><div class="swatch-name">Ink</div><div class="swatch-hex">#141311</div><div class="swatch-role">Primary text, CTA</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#2A2926;"></div><div class="swatch-info"><div class="swatch-name">Carbon</div><div class="swatch-hex">#2A2926</div><div class="swatch-role">Hover, secondary</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#8A8680;"></div><div class="swatch-info"><div class="swatch-name">Slate</div><div class="swatch-hex">#8A8680</div><div class="swatch-role">Labels, meta</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#B8B5AE;"></div><div class="swatch-info"><div class="swatch-name">Ash</div><div class="swatch-hex">#B8B5AE</div><div class="swatch-role">Borders, disabled</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#E8E6E1; border-bottom:1px solid var(--border);"></div><div class="swatch-info"><div class="swatch-name">Parchment</div><div class="swatch-hex">#E8E6E1</div><div class="swatch-role">Image bg, surface</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#F2F1EE; border-bottom:1px solid var(--border);"></div><div class="swatch-info"><div class="swatch-name">Linen</div><div class="swatch-hex">#F2F1EE</div><div class="swatch-role">Cards, inputs</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#FAFAF8; border-bottom:1px solid var(--border);"></div><div class="swatch-info"><div class="swatch-name">Canvas</div><div class="swatch-hex">#FAFAF8</div><div class="swatch-role">Page background</div></div></div>
+    <div class="color-swatch" style="border-color:rgba(0,87,255,0.25);"><div class="swatch-block" style="background:#0057FF;"></div><div class="swatch-info"><div class="swatch-name">Electric ⚡</div><div class="swatch-hex">#0057FF</div><div class="swatch-role">Accent only</div></div></div>
+  </div>
+
+  <div class="section-rule"></div>
+  <div class="sub-heading">Semantic Colours</div>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="swatch-block" style="background:#38A169;"></div><div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-hex">#38A169</div><div class="swatch-role">Confirmed, added</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#D69E2E;"></div><div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-hex">#D69E2E</div><div class="swatch-role">Low stock, pending</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#E53E3E;"></div><div class="swatch-info"><div class="swatch-name">Error</div><div class="swatch-hex">#E53E3E</div><div class="swatch-role">Errors, destructive</div></div></div>
+    <div class="color-swatch"><div class="swatch-block" style="background:#3182CE;"></div><div class="swatch-info"><div class="swatch-name">Info</div><div class="swatch-hex">#3182CE</div><div class="swatch-role">Neutral info</div></div></div>
+  </div>
+
+  <div class="section-rule"></div>
+  <div class="sub-heading">Electric Blue Usage Rule</div>
+  <div style="padding:20px 24px; background:var(--electric-muted); border:1px solid var(--electric-border); border-radius:8px; max-width:560px; display:flex; gap:16px; align-items:flex-start;">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0057FF" stroke-width="1.5" style="flex-shrink:0;margin-top:2px;"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 3"/></svg>
+    <div style="font-size:13px; color:#0041CC; line-height:1.7;">Electric Blue (#0057FF) is permitted <strong>only</strong> on: new-item badges, focus rings, primary CTA buttons when paired with a black alternative, and the active state of navigation items. It must never be used as a background fill on large surfaces.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: TYPOGRAPHY
+══════════════════════════════════ -->
+<div class="page" id="page-typography">
+  <div class="page-eyebrow">04 · Foundations</div>
+  <h1 class="page-title">Typography<strong>.</strong></h1>
+  <p class="page-desc">Space Grotesk is the single typeface for STROBE. All hierarchy is achieved through weight and size, not font switching.</p>
+
+  <div style="padding:16px 20px; background:var(--off-white); border:1px solid var(--border); border-radius:6px; margin-bottom:40px; max-width:520px;">
+    <div style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:6px;">Typeface</div>
+    <div style="font-size:20px; font-weight:600; letter-spacing:-0.01em;">Space Grotesk</div>
+    <div style="font-size:12px; color:var(--text-light); margin-top:4px;">300 · 400 · 500 · 600 · 700 &nbsp;·&nbsp; Google Fonts</div>
+    <div style="font-size:11px; color:var(--text-light); margin-top:8px;">Alternates: General Sans · Neue Montreal · DM Sans</div>
+  </div>
+
+  <div class="type-row">
+    <div class="type-meta-col">
+      <div class="type-meta-name">Display</div>
+      <div class="type-meta-spec">72 / 300<br>−3% tracking<br>LH 1.0</div>
+    </div>
+    <div style="font-size:56px; font-weight:300; letter-spacing:-0.03em; line-height:1; color:var(--text-dark);">Form</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta-col">
+      <div class="type-meta-name">Heading 1</div>
+      <div class="type-meta-spec">36 / 400<br>−2% tracking<br>LH 1.15</div>
+    </div>
+    <div style="font-size:36px; font-weight:400; letter-spacing:-0.02em; color:var(--text-dark);">New Arrivals</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta-col">
+      <div class="type-meta-name">Heading 2</div>
+      <div class="type-meta-spec">24 / 500<br>−1% tracking<br>LH 1.3</div>
+    </div>
+    <div style="font-size:24px; font-weight:500; letter-spacing:-0.01em; color:var(--text-dark);">Curated Edits</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta-col">
+      <div class="type-meta-name">Heading 3</div>
+      <div class="type-meta-spec">18 / 500<br>0 tracking<br>LH 1.4</div>
+    </div>
+    <div style="font-size:18px; font-weight:500; color:var(--text-dark);">Androgynous Basics</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta-col">
+      <div class="type-meta-name">Body</div>
+      <div class="type-meta-spec">15 / 400<br>0 tracking<br>LH 1.6</div>
+    </div>
+    <div style="font-size:15px; font-weight:400; color:var(--text-main); max-width:400px;">Minimally constructed, intentionally designed for every body. Fluid silhouettes that move with you.</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta-col">
+      <div class="type-meta-name">Body Small</div>
+      <div class="type-meta-spec">13 / 400<br>0 tracking<br>LH 1.6</div>
+    </div>
+    <div style="font-size:13px; color:var(--text-light);">Free shipping on orders over $150 · Easy 30-day returns</div>
+  </div>
+  <div class="type-row">
+    <div class="type-meta-col">
+      <div class="type-meta-name">Label / Caps</div>
+      <div class="type-meta-spec">11 / 600<br>+12% tracking<br>Uppercase</div>
+    </div>
+    <div style="font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-light);">New Season · SS25</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: SPACING & GRID
+══════════════════════════════════ -->
+<div class="page" id="page-spacing">
+  <div class="page-eyebrow">05 · Foundations</div>
+  <h1 class="page-title">Spacing <strong>&amp; Grid.</strong></h1>
+  <p class="page-desc">A base-4 spacing scale. All layout decisions reference this scale — no arbitrary values.</p>
+
+  <table class="space-table">
+    <tr><th>Token</th><th>Value</th><th>Visual</th><th>Usage</th></tr>
+    <tr><td><span class="space-name">space-1</span></td><td class="space-val">4px</td><td><div class="space-bar" style="width:4px;"></div></td><td class="space-use">Icon gap, micro padding</td></tr>
+    <tr><td><span class="space-name">space-2</span></td><td class="space-val">8px</td><td><div class="space-bar" style="width:8px;"></div></td><td class="space-use">Tag padding, tight gaps</td></tr>
+    <tr><td><span class="space-name">space-3</span></td><td class="space-val">12px</td><td><div class="space-bar" style="width:12px;"></div></td><td class="space-use">Button padding, card inner</td></tr>
+    <tr><td><span class="space-name">space-4</span></td><td class="space-val">16px</td><td><div class="space-bar" style="width:16px;"></div></td><td class="space-use">Default gap, form fields</td></tr>
+    <tr><td><span class="space-name">space-6</span></td><td class="space-val">24px</td><td><div class="space-bar" style="width:24px;"></div></td><td class="space-use">Card padding, group spacing</td></tr>
+    <tr><td><span class="space-name">space-8</span></td><td class="space-val">32px</td><td><div class="space-bar" style="width:32px;"></div></td><td class="space-use">Section inner, modal pad</td></tr>
+    <tr><td><span class="space-name">space-12</span></td><td class="space-val">48px</td><td><div class="space-bar" style="width:48px;"></div></td><td class="space-use">Section spacing</td></tr>
+    <tr><td><span class="space-name">space-16</span></td><td class="space-val">64px</td><td><div class="space-bar" style="width:64px;"></div></td><td class="space-use">Page section gap</td></tr>
+    <tr><td><span class="space-name">space-20</span></td><td class="space-val">80px</td><td><div class="space-bar" style="width:80px;"></div></td><td class="space-use">Hero padding, large sections</td></tr>
+  </table>
+
+  <div class="section-rule"></div>
+  <div class="sub-heading">Grid System</div>
+  <div style="display:flex; gap:24px; flex-wrap:wrap;">
+    <div class="grid-demo" style="flex:1; min-width:260px;">
+      <div class="grid-bar">Mobile — 4 columns · 16px gutter · 16px margin</div>
+      <div class="grid-visual" style="grid-template-columns:repeat(4,1fr);">
+        <div class="grid-col">1</div><div class="grid-col">2</div><div class="grid-col">3</div><div class="grid-col">4</div>
+      </div>
+    </div>
+    <div class="grid-demo" style="flex:1; min-width:320px;">
+      <div class="grid-bar">Tablet — 8 columns · 20px gutter · 32px margin</div>
+      <div class="grid-visual" style="grid-template-columns:repeat(8,1fr);">
+        <div class="grid-col">1</div><div class="grid-col">2</div><div class="grid-col">3</div><div class="grid-col">4</div><div class="grid-col">5</div><div class="grid-col">6</div><div class="grid-col">7</div><div class="grid-col">8</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-demo" style="margin-top:16px;">
+    <div class="grid-bar">Desktop — 12 columns · 24px gutter · 48px margin · max-width 1320px</div>
+    <div class="grid-visual" style="grid-template-columns:repeat(12,1fr);">
+      <div class="grid-col">1</div><div class="grid-col">2</div><div class="grid-col">3</div><div class="grid-col">4</div><div class="grid-col">5</div><div class="grid-col">6</div><div class="grid-col">7</div><div class="grid-col">8</div><div class="grid-col">9</div><div class="grid-col">10</div><div class="grid-col">11</div><div class="grid-col">12</div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+  <div class="sub-heading">Border Radius</div>
+  <div style="display:flex; gap:16px; flex-wrap:wrap; align-items:flex-end;">
+    <div style="text-align:center;"><div style="width:64px;height:64px;background:var(--warm-grey);border-radius:2px;margin-bottom:8px;"></div><div style="font-size:11px;color:var(--text-light);">2px<br>Sharp</div></div>
+    <div style="text-align:center;"><div style="width:64px;height:64px;background:var(--warm-grey);border-radius:4px;margin-bottom:8px;"></div><div style="font-size:11px;color:var(--text-light);">4px<br>Buttons</div></div>
+    <div style="text-align:center;"><div style="width:64px;height:64px;background:var(--warm-grey);border-radius:8px;margin-bottom:8px;"></div><div style="font-size:11px;color:var(--text-light);">8px<br>Cards</div></div>
+    <div style="text-align:center;"><div style="width:64px;height:64px;background:var(--warm-grey);border-radius:12px;margin-bottom:8px;"></div><div style="font-size:11px;color:var(--text-light);">12px<br>Product cards</div></div>
+    <div style="text-align:center;"><div style="width:64px;height:64px;background:var(--warm-grey);border-radius:16px;margin-bottom:8px;"></div><div style="font-size:11px;color:var(--text-light);">16px<br>Modals</div></div>
+    <div style="text-align:center;"><div style="width:64px;height:64px;background:var(--warm-grey);border-radius:32px;margin-bottom:8px;"></div><div style="font-size:11px;color:var(--text-light);">100px<br>Pills / tags</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: ICONS
+══════════════════════════════════ -->
+<div class="page" id="page-icons">
+  <div class="page-eyebrow">06 · Foundations</div>
+  <h1 class="page-title">Icons<strong>.</strong></h1>
+  <p class="page-desc">All icons use a consistent outline style — 1.5px stroke, 20×20 viewport. Always greyscale. Never fill-heavy or decorative.</p>
+
+  <div class="icon-grid">
+    <!-- Row 1: Navigation -->
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M3 10L10 3L17 10V17H13V13H7V17H3V10Z"/></svg>
+      <div class="icon-cell-label">Home</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><circle cx="9" cy="9" r="5"/><path d="M14 14l3 3"/></svg>
+      <div class="icon-cell-label">Search</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M4 6h12M4 10h12M4 14h8"/></svg>
+      <div class="icon-cell-label">Menu</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M3 7h14M3 13h14M7 4l-4 6 4 6M13 4l4 6-4 6"/></svg>
+      <div class="icon-cell-label">Filter</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><circle cx="10" cy="7" r="3.5"/><path d="M3 17c0-3 3.1-5.5 7-5.5s7 2.5 7 5.5"/></svg>
+      <div class="icon-cell-label">Profile</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M4 4h12l-1.5 9H5.5L4 4z"/><path d="M4 4L3 2H1"/><circle cx="7.5" cy="17" r="1"/><circle cx="14.5" cy="17" r="1"/></svg>
+      <div class="icon-cell-label">Bag</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M10 16.5l-6.3-6.3a4.45 4.45 0 016.3-6.3 4.45 4.45 0 016.3 6.3L10 16.5z"/></svg>
+      <div class="icon-cell-label">Save</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M10 4v12M4 10h12"/></svg>
+      <div class="icon-cell-label">Add</div>
+    </div>
+    <!-- Row 2: Actions -->
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M5 10h10M10 5l5 5-5 5"/></svg>
+      <div class="icon-cell-label">Arrow right</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M15 10H5M10 15l-5-5 5-5"/></svg>
+      <div class="icon-cell-label">Arrow left</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M5 15L15 5M15 5H8M15 5v7"/></svg>
+      <div class="icon-cell-label">External</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M5 5l10 10M15 5L5 15"/></svg>
+      <div class="icon-cell-label">Close</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M5 10l4 4 6-8"/></svg>
+      <div class="icon-cell-label">Check</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 3"/></svg>
+      <div class="icon-cell-label">Time</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 7v3.5l2.5 2.5"/></svg>
+      <div class="icon-cell-label">Clock</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M10 3v14M3 10l7-7 7 7"/></svg>
+      <div class="icon-cell-label">Upload</div>
+    </div>
+    <!-- Row 3: Product / App specific -->
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg>
+      <div class="icon-cell-label">Grid</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+      <div class="icon-cell-label">List</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M12 3H5a1 1 0 00-1 1v12a1 1 0 001 1h10a1 1 0 001-1V8l-4-5z"/><path d="M12 3v5h4"/></svg>
+      <div class="icon-cell-label">Document</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M10 2a5 5 0 00-5 5v2H4l-1 9h14l-1-9h-1V7a5 5 0 00-5-5z"/></svg>
+      <div class="icon-cell-label">Bag alt</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M4 14.5A5.5 5.5 0 0110 9a5.5 5.5 0 016 5.5"/><circle cx="10" cy="6" r="2.5"/></svg>
+      <div class="icon-cell-label">User</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><circle cx="5.5" cy="14.5" r="2"/><circle cx="14.5" cy="14.5" r="2"/><path d="M2 4h2l2.5 8h7l2.5-6H6"/></svg>
+      <div class="icon-cell-label">Cart</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/><path d="M10 7v6M7 10h6"/></svg>
+      <div class="icon-cell-label">Add circ</div>
+    </div>
+    <div class="icon-cell">
+      <svg viewBox="0 0 20 20"><path d="M10 2L3 7v11h14V7L10 2z"/><path d="M7 18V12h6v6"/></svg>
+      <div class="icon-cell-label">Home alt</div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+  <div style="padding:16px 20px; background:var(--off-white); border-radius:6px; border:1px solid var(--border); max-width:480px;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Icon Rules</div>
+    <div style="font-size:13px;color:var(--text-main);line-height:1.8;">
+      · Always greyscale — stroke: <span style="font-family:monospace;">#5C5A57</span> or contextual<br>
+      · Never fill — outline / stroke only<br>
+      · Consistent 1.5px stroke-width<br>
+      · Optical size: 16px UI · 20px standard · 24px prominent<br>
+      · Minimum touch target: 44×44px
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: BUTTONS
+══════════════════════════════════ -->
+<div class="page" id="page-buttons">
+  <div class="page-eyebrow">07 · Components</div>
+  <h1 class="page-title">Buttons<strong>.</strong></h1>
+  <p class="page-desc">Five button types. One accent variant. Sizing scales from small to large — always uppercase, always tight tracking.</p>
+
+  <div class="btn-showcase">
+    <div>
+      <div class="sub-heading">Types</div>
+      <div class="btn-row" style="margin-bottom:12px;"><div class="btn-row-label">Primary</div><button class="btn btn-primary">Shop Now</button><button class="btn btn-primary btn-sm">Small</button><button class="btn btn-primary btn-lg">Large</button></div>
+      <div class="btn-row" style="margin-bottom:12px;"><div class="btn-row-label">Accent ⚡</div><button class="btn btn-accent">New Drop</button><button class="btn btn-accent btn-sm">New</button></div>
+      <div class="btn-row" style="margin-bottom:12px;"><div class="btn-row-label">Outline</div><button class="btn btn-outline">View All</button><button class="btn btn-outline btn-sm">View</button></div>
+      <div class="btn-row" style="margin-bottom:12px;"><div class="btn-row-label">Ghost</div><button class="btn btn-ghost">Learn more →</button></div>
+      <div class="btn-row" style="margin-bottom:12px;"><div class="btn-row-label">Pill / Filter</div><button class="btn btn-pill-s">All</button><button class="btn btn-pill-s a">Tops</button><button class="btn btn-pill-s">Bottoms</button><button class="btn btn-pill-s">Outerwear</button></div>
+    </div>
+    <div>
+      <div class="sub-heading">Icon Buttons</div>
+      <div class="btn-row">
+        <div class="btn-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#5C5A57" stroke-width="1.5"><circle cx="7" cy="7" r="4.5"/><path d="M11 11l2.5 2.5"/></svg>
+        </div>
+        <div class="btn-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#5C5A57" stroke-width="1.5"><path d="M8 12L2.5 6.2a3.6 3.6 0 015.1-5.1A3.6 3.6 0 0113.5 6.2L8 12z"/></svg>
+        </div>
+        <div class="btn-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#5C5A57" stroke-width="1.5"><path d="M2 3h12l-1.2 7.5H3.2L2 3z"/><path d="M2 3L1.5 1.5H0"/><circle cx="6" cy="14" r=".8"/><circle cx="11.5" cy="14" r=".8"/></svg>
+        </div>
+        <div class="btn-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#5C5A57" stroke-width="1.5"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+        </div>
+        <div class="btn-icon">
+          <svg viewBox="0 0 16 16" fill="none" stroke="#5C5A57" stroke-width="1.5"><circle cx="10.5" cy="3.5" r="1.5"/><circle cx="10.5" cy="12.5" r="1.5"/><circle cx="3.5" cy="8" r="1.5"/><path d="M5 8.4l4.1 3.3M5 7.6l4.1-3.3"/></svg>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="sub-heading">States</div>
+      <div class="btn-row">
+        <div><button class="btn btn-primary" style="opacity:1;">Default</button></div>
+        <div><button class="btn btn-primary" style="background:var(--text-main);">Hover</button></div>
+        <div><button class="btn btn-primary" style="background:#3D3C3A;outline:3px solid var(--electric-border);">Focus</button></div>
+        <div><button class="btn btn-primary" style="opacity:0.4;cursor:not-allowed;">Disabled</button></div>
+        <div><button class="btn btn-primary" style="min-width:100px;display:flex;align-items:center;justify-content:center;gap:8px;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="white" stroke-width="2"><path d="M7 2v5l3 3"/><circle cx="7" cy="7" r="5.5"/></svg>
+          Loading
+        </button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: FORM INPUTS
+══════════════════════════════════ -->
+<div class="page" id="page-forminputs">
+  <div class="page-eyebrow">08 · Components</div>
+  <h1 class="page-title">Form<strong> Inputs.</strong></h1>
+  <p class="page-desc">Clean, minimal form elements. Blue focus ring. Clear error and success states. Accessible at WCAG AA.</p>
+
+  <div class="input-grid">
+    <div class="fg"><label class="fl">Full Name</label><input class="fi" type="text" placeholder="Your name"></div>
+    <div class="fg"><label class="fl">Email</label><input class="fi" type="email" placeholder="you@strobe.co"></div>
+    <div class="fg"><label class="fl">Size</label><select class="fselect"><option>Select size</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option></select></div>
+    <div class="fg"><label class="fl">Search</label><input class="fi" type="text" placeholder="Search styles…"></div>
+    <div class="fg">
+      <label class="fl">Password — Error</label>
+      <input class="fi error" type="password" value="badpass">
+      <span class="fi-help error">Password must be at least 8 characters.</span>
+    </div>
+    <div class="fg">
+      <label class="fl">Promo Code — Success</label>
+      <input class="fi success" type="text" value="STROBE25">
+      <span class="fi-help success">Code applied — 25% off.</span>
+    </div>
+    <div class="fg" style="grid-column:1/-1;">
+      <label class="fl">Message</label>
+      <textarea class="fi" rows="3" placeholder="Tell us about your order…" style="resize:vertical;"></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: CARDS
+══════════════════════════════════ -->
+<div class="page" id="page-cards">
+  <div class="page-eyebrow">09 · Components</div>
+  <h1 class="page-title">Cards<strong>.</strong></h1>
+  <p class="page-desc">Product cards are the primary content unit. Hover reveals elevation. Badges and save states layer on top.</p>
+
+  <div class="card-gallery">
+    <div class="card">
+      <div class="card-img" style="background:#D9D7D3;">
+        <div class="card-img-placeholder"></div>
+        <span class="card-badge badge-new">⚡ New</span>
+        <div class="card-save"><svg viewBox="0 0 16 16"><path d="M8 13L2 7.2a3.5 3.5 0 014.9-5A3.5 3.5 0 0114 7.2L8 13z" stroke="#5C5A57" stroke-width="1.5" fill="none"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-brand-label">Studio Arch</div>
+        <div class="card-title">Oversized Linen Blazer</div>
+        <div class="card-row"><div class="card-price">$298</div><div class="size-dots"><div class="size-dot">XS</div><div class="size-dot">S</div><div class="size-dot">M</div></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:#E3E0DB;">
+        <div class="card-img-placeholder"></div>
+        <div class="card-save"><svg viewBox="0 0 16 16"><path d="M8 13L2 7.2a3.5 3.5 0 014.9-5A3.5 3.5 0 0114 7.2L8 13z" stroke="#5C5A57" stroke-width="1.5" fill="none"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-brand-label">Totem</div>
+        <div class="card-title">Wide-Leg Trousers</div>
+        <div class="card-row"><div class="card-price">$185</div><div class="size-dots"><div class="size-dot">S</div><div class="size-dot">M</div><div class="size-dot">L</div></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img" style="background:#CCCAC7;">
+        <div class="card-img-placeholder"></div>
+        <span class="card-badge badge-sale">Sale</span>
+        <div class="card-save"><svg viewBox="0 0 16 16"><path d="M8 13L2 7.2a3.5 3.5 0 014.9-5A3.5 3.5 0 0114 7.2L8 13z" stroke="#0057FF" stroke-width="1.5" fill="rgba(0,87,255,0.08)"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-brand-label">Vein Studio</div>
+        <div class="card-title">Ribbed Turtleneck</div>
+        <div class="card-row"><div><span class="card-price-orig">$120 </span><span class="card-price-sale">$84</span></div><div class="size-dots"><div class="size-dot">M</div><div class="size-dot">L</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: BADGES
+══════════════════════════════════ -->
+<div class="page" id="page-badges">
+  <div class="page-eyebrow">10 · Components</div>
+  <h1 class="page-title">Badges<strong>.</strong></h1>
+  <p class="page-desc">Compact labels that communicate state, category, or status. Always pill-shaped. Limit to one badge per product card.</p>
+
+  <div class="sub-heading">Types</div>
+  <div class="badge-row">
+    <span class="badge badge-default">Unisex</span>
+    <span class="badge badge-primary">Bestseller</span>
+    <span class="badge badge-accent">⚡ New</span>
+    <span class="badge badge-success">In Stock</span>
+    <span class="badge badge-warn">Low Stock</span>
+    <span class="badge badge-error">Sold Out</span>
+    <span class="badge badge-info">Pre-order</span>
+  </div>
+
+  <div class="sub-heading">Sizes</div>
+  <div class="badge-row">
+    <span class="badge badge-default badge-xs">XS Badge</span>
+    <span class="badge badge-default">Default</span>
+    <span class="badge badge-default badge-lg">Large</span>
+  </div>
+
+  <div class="sub-heading">With Icons</div>
+  <div class="badge-row">
+    <span class="badge badge-success">✓ Added to bag</span>
+    <span class="badge badge-warn">△ 2 left</span>
+    <span class="badge badge-error">✕ Sold out</span>
+    <span class="badge badge-accent">⚡ Just dropped</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: ALERTS
+══════════════════════════════════ -->
+<div class="page" id="page-alerts">
+  <div class="page-eyebrow">11 · Components</div>
+  <h1 class="page-title">Alerts<strong>.</strong></h1>
+  <p class="page-desc">System feedback and contextual notices. Always accompanied by an icon. Dismissible by default.</p>
+
+  <div class="alert alert-default">
+    <svg viewBox="0 0 16 16" fill="none" stroke="#5C5A57" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5l2 2"/></svg>
+    <div><div class="alert-title">Size guide updated</div><div class="alert-msg">We've refreshed our sizing across all categories for SS25.</div></div>
+  </div>
+  <div class="alert alert-success">
+    <svg viewBox="0 0 16 16" fill="none" stroke="#276749" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M5 8l2.5 2.5L11 5.5"/></svg>
+    <div><div class="alert-title">Added to bag</div><div class="alert-msg">Oversized linen jacket — size M has been added.</div></div>
+  </div>
+  <div class="alert alert-accent">
+    <svg viewBox="0 0 16 16" fill="none" stroke="#0057FF" stroke-width="1.5"><path d="M8 1l2 4.5 4.5.7-3.25 3.2.77 4.5L8 11.5 4 13.9l.77-4.5L1.5 6.2l4.5-.7z"/></svg>
+    <div><div class="alert-title">New arrivals</div><div class="alert-msg">SS25 collection just dropped — 200+ new styles.</div></div>
+  </div>
+  <div class="alert alert-warn">
+    <svg viewBox="0 0 16 16" fill="none" stroke="#975A16" stroke-width="1.5"><path d="M8 1L15 14H1L8 1z"/><path d="M8 6v4M8 11.5v.5"/></svg>
+    <div><div class="alert-title">Low stock</div><div class="alert-msg">Only 2 items left in your selected size.</div></div>
+  </div>
+  <div class="alert alert-error">
+    <svg viewBox="0 0 16 16" fill="none" stroke="#C53030" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5"/></svg>
+    <div><div class="alert-title">Payment failed</div><div class="alert-msg">We couldn't process your card. Please try again or use a different method.</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: COMPONENTS
+══════════════════════════════════ -->
+<div class="page" id="page-components">
+  <div class="page-eyebrow">12 · Components</div>
+  <h1 class="page-title">Components<strong>.</strong></h1>
+  <p class="page-desc">Reusable interactive elements — toggles, checkboxes, sliders, tabs, and progress indicators.</p>
+
+  <div class="sub-heading">Toggles</div>
+  <div class="comp-row" style="margin-bottom:32px;">
+    <div class="toggle"><div class="toggle-track off"><div class="toggle-thumb"></div></div><span class="toggle-label">Notifications off</span></div>
+    <div class="toggle"><div class="toggle-track on"><div class="toggle-thumb"></div></div><span class="toggle-label">Saved items on</span></div>
+    <div class="toggle" style="opacity:0.4;cursor:not-allowed;"><div class="toggle-track off"><div class="toggle-thumb"></div></div><span class="toggle-label">Disabled</span></div>
+  </div>
+
+  <div class="sub-heading">Checkboxes &amp; Radios</div>
+  <div class="comp-row" style="margin-bottom:32px; align-items:flex-start; gap:40px;">
+    <div class="check-row">
+      <div class="check-item"><div class="check-box checked"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Organic cotton</div>
+      <div class="check-item"><div class="check-box checked"><svg viewBox="0 0 10 10"><path d="M2 5l2.5 2.5L8 3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Size inclusive</div>
+      <div class="check-item"><div class="check-box"></div>Ships internationally</div>
+    </div>
+    <div class="check-row">
+      <div class="check-item"><div class="radio-circle checked"><div class="radio-dot"></div></div>All genders</div>
+      <div class="check-item"><div class="radio-circle"><div class="radio-dot"></div></div>Masc-leaning</div>
+      <div class="check-item"><div class="radio-circle"><div class="radio-dot"></div></div>Femme-leaning</div>
+    </div>
+  </div>
+
+  <div class="sub-heading">Range Slider</div>
+  <div class="slider-wrap" style="margin-bottom:32px;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:12px;color:var(--text-light);"><span>Price range</span><span>$0 – $420</span></div>
+    <input type="range" class="slider" value="60">
+  </div>
+
+  <div class="sub-heading">Tabs</div>
+  <div style="margin-bottom:32px;">
+    <div class="tab-bar">
+      <div class="tab-item active">All</div>
+      <div class="tab-item">Tops</div>
+      <div class="tab-item active-blue">New ⚡</div>
+      <div class="tab-item">Sale</div>
+    </div>
+    <div style="font-size:13px;color:var(--text-light);">Tab content renders here</div>
+  </div>
+
+  <div class="sub-heading">Progress</div>
+  <div class="progress-wrap">
+    <div class="progress-bar"><div class="progress-fill" style="width:75%;background:var(--text-dark);"></div></div>
+    <div class="progress-label"><span>Order placed</span><span>75%</span></div>
+    <div style="margin-top:12px;"></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:40%;background:var(--electric);"></div></div>
+    <div class="progress-label"><span>Profile complete</span><span style="color:var(--electric);">40%</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: MOTION
+══════════════════════════════════ -->
+<div class="page" id="page-motion">
+  <div class="page-eyebrow">13 · Guidelines</div>
+  <h1 class="page-title">Motion<strong>.</strong></h1>
+  <p class="page-desc">Motion is functional, never decorative. Transitions communicate state change. Duration and easing follow these tokens.</p>
+
+  <div class="motion-cards">
+    <div class="motion-card">
+      <div class="motion-card-title">Instant</div>
+      <div class="motion-card-desc">Immediate feedback. No visible delay. Used for toggles and checkbox state changes.</div>
+      <div class="motion-demo">Hover me</div>
+      <div class="motion-token">duration: 0ms</div>
+    </div>
+    <div class="motion-card">
+      <div class="motion-card-title">Micro</div>
+      <div class="motion-card-desc">Hover states, button press, icon swaps. Subtle and fast — barely perceptible.</div>
+      <div class="motion-demo" style="transition:background 0.15s;">Hover me</div>
+      <div class="motion-token">duration: 150ms · ease-out</div>
+    </div>
+    <div class="motion-card">
+      <div class="motion-card-title">Short</div>
+      <div class="motion-card-desc">Card hover elevation, dropdown open, tooltip appear. Snappy and intentional.</div>
+      <div class="motion-demo" style="transition:all 0.2s;">Hover me</div>
+      <div class="motion-token">duration: 200ms · ease-out</div>
+    </div>
+    <div class="motion-card">
+      <div class="motion-card-title">Medium</div>
+      <div class="motion-card-desc">Page transitions, modal entry, drawer slide. Fluid and visible but never slow.</div>
+      <div class="motion-demo" style="transition:all 0.3s;">Hover me</div>
+      <div class="motion-token">duration: 300ms · ease-in-out</div>
+    </div>
+    <div class="motion-card">
+      <div class="motion-card-title">Long</div>
+      <div class="motion-card-desc">Hero reveals, splash screens, onboarding. Used only for major entry moments.</div>
+      <div class="motion-demo" style="transition:all 0.5s;">Hover me</div>
+      <div class="motion-token">duration: 500ms · ease-in-out</div>
+    </div>
+    <div class="motion-card">
+      <div class="motion-card-title">Spring</div>
+      <div class="motion-card-desc">Sheet drag release, image zoom. Natural physics — only on touch or gesture events.</div>
+      <div class="motion-demo">Gesture only</div>
+      <div class="motion-token">spring · stiffness: 300 · damping: 30</div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+  <div style="padding:20px; background:var(--off-white); border-radius:8px; border:1px solid var(--border); max-width:520px;">
+    <div class="sub-heading" style="margin:0 0 12px;">Motion Principles</div>
+    <div style="font-size:13px;color:var(--text-main);line-height:1.9;">
+      · <strong>Reduce</strong> — always respect prefers-reduced-motion<br>
+      · <strong>Purposeful</strong> — every transition must explain a state change<br>
+      · <strong>Fast in, slow out</strong> — UI elements arrive quickly and leave naturally<br>
+      · <strong>No loops</strong> — avoid looping animations except loading states<br>
+      · <strong>Consistent</strong> — matching interactions use matching durations
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: ALL TOKENS
+══════════════════════════════════ -->
+<div class="page" id="page-alltokens">
+  <div class="page-eyebrow">14 · Guidelines</div>
+  <h1 class="page-title">All<strong> Tokens.</strong></h1>
+  <p class="page-desc">The complete design token reference. Use these CSS custom properties throughout all implementations.</p>
+
+  <table class="token-table">
+    <tr><th>Token</th><th>Value</th><th></th><th>Description</th></tr>
+
+    <tr><td colspan="4" class="token-group">Color — Neutral</td></tr>
+    <tr><td class="token-name">--color-ink</td><td class="token-val">#141311</td><td><span class="token-swatch" style="background:#141311;"></span></td><td class="token-desc">Primary text, dark CTA</td></tr>
+    <tr><td class="token-name">--color-carbon</td><td class="token-val">#2A2926</td><td><span class="token-swatch" style="background:#2A2926;"></span></td><td class="token-desc">Hover, secondary text</td></tr>
+    <tr><td class="token-name">--color-slate</td><td class="token-val">#8A8680</td><td><span class="token-swatch" style="background:#8A8680;"></span></td><td class="token-desc">Labels, metadata</td></tr>
+    <tr><td class="token-name">--color-ash</td><td class="token-val">#B8B5AE</td><td><span class="token-swatch" style="background:#B8B5AE;"></span></td><td class="token-desc">Borders, dividers</td></tr>
+    <tr><td class="token-name">--color-parchment</td><td class="token-val">#E8E6E1</td><td><span class="token-swatch" style="background:#E8E6E1;"></span></td><td class="token-desc">Image backgrounds</td></tr>
+    <tr><td class="token-name">--color-linen</td><td class="token-val">#F2F1EE</td><td><span class="token-swatch" style="background:#F2F1EE;border:1px solid #ddd;"></span></td><td class="token-desc">Cards, inputs</td></tr>
+    <tr><td class="token-name">--color-canvas</td><td class="token-val">#FAFAF8</td><td><span class="token-swatch" style="background:#FAFAF8;border:1px solid #ddd;"></span></td><td class="token-desc">Page background</td></tr>
+    <tr><td class="token-name">--color-border</td><td class="token-val">#E0DED9</td><td><span class="token-swatch" style="background:#E0DED9;"></span></td><td class="token-desc">Default border</td></tr>
+
+    <tr><td colspan="4" class="token-group">Color — Accent</td></tr>
+    <tr><td class="token-name">--color-electric</td><td class="token-val">#0057FF</td><td><span class="token-swatch" style="background:#0057FF;"></span></td><td class="token-desc">Primary accent — use sparingly</td></tr>
+    <tr><td class="token-name">--color-electric-hover</td><td class="token-val">#0048D9</td><td><span class="token-swatch" style="background:#0048D9;"></span></td><td class="token-desc">Electric hover state</td></tr>
+    <tr><td class="token-name">--color-electric-muted</td><td class="token-val">rgba(0,87,255,0.07)</td><td><span class="token-swatch" style="background:rgba(0,87,255,0.07);border:1px solid rgba(0,87,255,0.2);"></span></td><td class="token-desc">Electric bg tint</td></tr>
+
+    <tr><td colspan="4" class="token-group">Color — Semantic</td></tr>
+    <tr><td class="token-name">--color-success</td><td class="token-val">#38A169</td><td><span class="token-swatch" style="background:#38A169;"></span></td><td class="token-desc">Positive, confirmed</td></tr>
+    <tr><td class="token-name">--color-warning</td><td class="token-val">#D69E2E</td><td><span class="token-swatch" style="background:#D69E2E;"></span></td><td class="token-desc">Caution, low stock</td></tr>
+    <tr><td class="token-name">--color-error</td><td class="token-val">#E53E3E</td><td><span class="token-swatch" style="background:#E53E3E;"></span></td><td class="token-desc">Error, sold out</td></tr>
+    <tr><td class="token-name">--color-info</td><td class="token-val">#3182CE</td><td><span class="token-swatch" style="background:#3182CE;"></span></td><td class="token-desc">Neutral information</td></tr>
+
+    <tr><td colspan="4" class="token-group">Typography</td></tr>
+    <tr><td class="token-name">--font-primary</td><td class="token-val">'Space Grotesk'</td><td></td><td class="token-desc">All text</td></tr>
+    <tr><td class="token-name">--text-display</td><td class="token-val">72px / 300</td><td></td><td class="token-desc">Hero headlines</td></tr>
+    <tr><td class="token-name">--text-h1</td><td class="token-val">36px / 400</td><td></td><td class="token-desc">Page titles</td></tr>
+    <tr><td class="token-name">--text-h2</td><td class="token-val">24px / 500</td><td></td><td class="token-desc">Section headers</td></tr>
+    <tr><td class="token-name">--text-h3</td><td class="token-val">18px / 500</td><td></td><td class="token-desc">Sub-headers</td></tr>
+    <tr><td class="token-name">--text-body</td><td class="token-val">15px / 400</td><td></td><td class="token-desc">Main body</td></tr>
+    <tr><td class="token-name">--text-small</td><td class="token-val">13px / 400</td><td></td><td class="token-desc">Secondary text</td></tr>
+    <tr><td class="token-name">--text-label</td><td class="token-val">11px / 600 CAPS</td><td></td><td class="token-desc">Labels, tabs</td></tr>
+
+    <tr><td colspan="4" class="token-group">Spacing</td></tr>
+    <tr><td class="token-name">--space-1</td><td class="token-val">4px</td><td></td><td class="token-desc">Micro</td></tr>
+    <tr><td class="token-name">--space-2</td><td class="token-val">8px</td><td></td><td class="token-desc">XS</td></tr>
+    <tr><td class="token-name">--space-3</td><td class="token-val">12px</td><td></td><td class="token-desc">Small</td></tr>
+    <tr><td class="token-name">--space-4</td><td class="token-val">16px</td><td></td><td class="token-desc">Default</td></tr>
+    <tr><td class="token-name">--space-6</td><td class="token-val">24px</td><td></td><td class="token-desc">Medium</td></tr>
+    <tr><td class="token-name">--space-8</td><td class="token-val">32px</td><td></td><td class="token-desc">Large</td></tr>
+    <tr><td class="token-name">--space-12</td><td class="token-val">48px</td><td></td><td class="token-desc">XL</td></tr>
+    <tr><td class="token-name">--space-16</td><td class="token-val">64px</td><td></td><td class="token-desc">2XL</td></tr>
+
+    <tr><td colspan="4" class="token-group">Border Radius</td></tr>
+    <tr><td class="token-name">--radius-sharp</td><td class="token-val">2px</td><td></td><td class="token-desc">Dividers, rules</td></tr>
+    <tr><td class="token-name">--radius-sm</td><td class="token-val">4px</td><td></td><td class="token-desc">Buttons, inputs</td></tr>
+    <tr><td class="token-name">--radius-md</td><td class="token-val">8px</td><td></td><td class="token-desc">Surface cards</td></tr>
+    <tr><td class="token-name">--radius-lg</td><td class="token-val">12px</td><td></td><td class="token-desc">Product cards</td></tr>
+    <tr><td class="token-name">--radius-xl</td><td class="token-val">16px</td><td></td><td class="token-desc">Modals, sheets</td></tr>
+    <tr><td class="token-name">--radius-pill</td><td class="token-val">100px</td><td></td><td class="token-desc">Tags, badges</td></tr>
+
+    <tr><td colspan="4" class="token-group">Motion</td></tr>
+    <tr><td class="token-name">--duration-micro</td><td class="token-val">150ms</td><td></td><td class="token-desc">Hover, toggle</td></tr>
+    <tr><td class="token-name">--duration-short</td><td class="token-val">200ms</td><td></td><td class="token-desc">Card, dropdown</td></tr>
+    <tr><td class="token-name">--duration-medium</td><td class="token-val">300ms</td><td></td><td class="token-desc">Modal, drawer</td></tr>
+    <tr><td class="token-name">--duration-long</td><td class="token-val">500ms</td><td></td><td class="token-desc">Page, hero reveal</td></tr>
+    <tr><td class="token-name">--ease-out</td><td class="token-val">cubic-bezier(0,0,0.2,1)</td><td></td><td class="token-desc">Elements entering</td></tr>
+    <tr><td class="token-name">--ease-in</td><td class="token-val">cubic-bezier(0.4,0,1,1)</td><td></td><td class="token-desc">Elements leaving</td></tr>
+    <tr><td class="token-name">--ease-inout</td><td class="token-val">cubic-bezier(0.4,0,0.2,1)</td><td></td><td class="token-desc">Shared transitions</td></tr>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════
+     PAGE: NEVER CHANGE
+══════════════════════════════════ -->
+<div class="page" id="page-neverchange">
+  <div class="page-eyebrow">15 · Guidelines</div>
+  <h1 class="page-title" style="color:#C53030;">Never<strong> Change.</strong></h1>
+  <p class="page-desc">These elements form the immutable core of the STROBE identity. They must never be altered, overridden, or reinterpreted — in any context, on any surface.</p>
+
+  <div class="never-grid">
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>The Wordmark Letterforms</strong>Never alter, distort, skew, stretch, or restyle the STROBE wordmark. Only approved SVG assets may be used.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>The Logo Diamond Icon</strong>The geometric diamond mark cannot be redrawn, recoloured outside approved variants, or combined with other icons or shapes.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>Electric Blue as a Fill</strong>Electric Blue (#0057FF) must never be used as a large background, gradient base, or fill on any surface larger than a badge or focus ring.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>The Primary Typeface</strong>Space Grotesk is the only permitted typeface. No substitute fonts, no decorative display fonts, no system fonts in branded contexts.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>Gendered Language</strong>Never use "men's", "women's", "his", "hers", or any gendered labels in product categorisation, navigation, or UI copy.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>Icon Fill Styles</strong>Icons must always be outline / stroke style. Never use filled icon variants — they break visual consistency with the STROBE language.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>Off-Brand Colour Introductions</strong>No new brand colours may be introduced without a full design system review. The palette is closed.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>Logo on Busy Backgrounds</strong>The STROBE logo may only appear on solid Canvas, Ink, or Electric backgrounds. Never on photography, patterns, or gradients.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>Spacing Outside the Scale</strong>Never use arbitrary pixel values not in the base-4 spacing system. All spacing must reference a design token.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>Motion on Static Content</strong>Never add looping or decorative animations to product images, text, or UI elements that are not communicating a state change.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>Reducing Size Representation</strong>The platform must always display the full available size range. Never suppress or deprioritise extended sizes in filters or display.</div>
+    </div>
+    <div class="never-item">
+      <div class="never-x">✕</div>
+      <div class="never-text"><strong>App Icon Redesign Without Approval</strong>The app icon shape, geometry, and approved colour variants are locked. Never introduce a new icon variant without a formal brand sign-off process.</div>
+    </div>
+  </div>
+
+  <div class="section-rule"></div>
+  <div style="padding:20px 24px; background:#FFF5F5; border:1.5px solid #FEB2B2; border-radius:8px; max-width:600px;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#C53030;margin-bottom:8px;">Who this applies to</div>
+    <div style="font-size:13px;color:#742A2A;line-height:1.8;">These constraints apply to every team, partner, contractor, and third-party working with the STROBE brand — without exception. Any proposed change to items on this list requires written approval from the STROBE brand lead.</div>
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+  const links = document.querySelectorAll('.sidebar-link');
+  links.forEach(l => {
+    if (l.getAttribute('onclick') && l.getAttribute('onclick').includes("'" + id + "'")) {
+      l.classList.add('active');
+    }
+  });
+  window.scrollTo({ top: 0 });
+}
+</script>
+</body>
+</html>
