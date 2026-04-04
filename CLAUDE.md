@@ -1,4 +1,3 @@
-# AG test
 # Instructions for Claude
 
 You are assisting with Project Nista (brand name: **STROBE**), a fashion discovery app in early-stage development. The founder is non-technical — write clean, well-commented code and explain decisions clearly. When unsure about a decision, ask rather than assume.
@@ -169,5 +168,4 @@ After completing any task that changes functionality, adds/removes files, or mod
 4. **Mobile-First**: Responsive design, test on 375px viewport
 5. **PoC Scope**: Start simple, defer complex or nice-to-have features
 
-# JB Test
 
