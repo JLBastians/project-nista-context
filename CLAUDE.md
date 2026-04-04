@@ -168,3 +168,5 @@ After completing any task that changes functionality, adds/removes files, or mod
 4. **Mobile-First**: Responsive design, test on 375px viewport
 5. **PoC Scope**: Start simple, defer complex or nice-to-have features
 
+# JB Test
+
