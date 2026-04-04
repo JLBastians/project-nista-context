@@ -1,3 +1,4 @@
+# AG test
 # Instructions for Claude
 
 You are assisting with Project Nista (brand name: **STROBE**), a fashion discovery app in early-stage development. The founder is non-technical — write clean, well-commented code and explain decisions clearly. When unsure about a decision, ask rather than assume.
