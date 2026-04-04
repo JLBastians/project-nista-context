@@ -1,0 +1,6 @@
+[submodule "Backend"]
+	path = Backend
+	url = https://github.com/JLBastians/project-nista-backend
+[submodule "Frontend"]
+	path = Frontend
+	url = https://github.com/JLBastians/project-nista-frontend
