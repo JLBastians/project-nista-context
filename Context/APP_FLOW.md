@@ -14,7 +14,7 @@ This document traces the complete user journey through STROBE from first visit t
 
 ### Flow 1: New User — Registration → Onboarding → First Feed
 
-**Route:** `/welcome` → `/register` → `/onboarding` (5 steps) → `/feed`
+**Route:** `/welcome` → `/register` → `/onboarding` (7 steps) → `/feed`
 
 **User arrives at `/welcome`:** Sees STROBE logo, value prop, and two CTAs: Create Account and Sign In.
 
@@ -22,12 +22,14 @@ This document traces the complete user journey through STROBE from first visit t
 
 **User submits registration:** System creates user account, sets `isAuthenticated: true`, navigates to `/onboarding`.
 
-**Onboarding (5 steps, ~2–3 minutes total):**
+**Onboarding (7 steps, ~2–3 minutes total):**
+0. Welcome intro: STROBE logo + short personalisation value prop. CTA: "Get started".
 1. Age: Birth year picker. Frames taste discovery by age demographic.
-2. Gender expression: Multi-select (Womenswear, Menswear, Androgynous, All of the above).
-3. City: IP geolocation pre-fill, manual override available. Powers location-aware recommendations.
-4. Activities: Multi-select lifestyle grid (everyday, office, formal events, travel, gym, etc.). User rates each selected activity as Often/Sometimes/Rarely. Frequency maps directly to occasion taste vector weighting.
-5. Brands: Searchable brand list, 3–10 selections. User indicates shopping orientation (conventional or vintage/secondhand). Brands' style vectors are averaged to seed a brand-prior vector.
+2. Gender expression: Multi-select (Womenswear, Menswear, Androgynous, All of the above). ≥1 selection required.
+3. Sizing: Gender-adaptive size selectors (tops, bottoms, shoes). Women's US numeric / Men's US chest & waist. Optional — all fields skippable.
+4. City: IP geolocation pre-fill, manual override available. Powers location-aware recommendations.
+5. Activities: Multi-select lifestyle grid (11 occasions: everyday, office, creative workplace, dinner out, cocktails, formal events, travel, gym, outdoor, beach, festivals). User rates each selected activity as Often/Sometimes/Rarely. Frequency maps directly to occasion taste vector weighting.
+6. Brands: Searchable brand list, 3–10 selections required. "I shop vintage/secondhand primarily" toggle option. Brands' style vectors are averaged to seed a brand-prior vector.
 
 System shows loading state ("We're building your feed...") for up to 3 seconds, then navigates to `/feed`.
 

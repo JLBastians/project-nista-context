@@ -112,7 +112,8 @@ Sort dropdown (default: Best Match). Options:
 - Brand name
 - Product title (2 lines, truncated)
 - Price
-- Match score badge (Phase 3+ only): "92% Match" shown on top-right if relevance ≥90%
+
+> **Internal metric:** Marqo relevance scores and taste vector match scores are used for backend ranking and analytics only. They are not displayed to users.
 
 **Empty state:**
 - Search icon + "No Results" heading + copy: "Try different keywords or adjust your filters."

@@ -83,7 +83,7 @@ Features are organized by priority tier. For detailed functional requirements an
 
 - **Product Enrichment:** Ingested products are enriched to have product vector (to match similarity against products within category - e.g. used for search), style vector (to match style similarity across product categories - e.g. used for discovery), feature tagging (e.g. feminine, minimalist, etc.).
 
-- **User Cold Start:** 5-step onboarding flow (age, gender expression, city, lifestyle activities, brand selections) to seed taste vectors and preferences.
+- **User Cold Start:** 7-step onboarding flow (welcome intro, age, gender expression [multi-select], sizing [gender-adaptive], city, lifestyle activities [11 occasions], brand selections [3–10 required]) to seed taste vectors and preferences.
 
 - **User Interaction Feedback Loop:** Track explicit interactions (likes, dismisses, wishlist adds, add-to-bag) and passive signals (dwell time, detail views). Feed interactions into algorithm, accounting for factors such as session preferences vs historical, etc.
 
@@ -153,7 +153,7 @@ Real-time data updates (e.g. product inventory), full in-app checkout with unifi
 
 ### Scenario 1 — First-Time User Onboarding & Feed Seeding
 
-Maya downloads STROBE and signs up via Apple ID. The 6-step onboarding asks age, gender expression, city (pre-filled via IP), lifestyle activities (dinner out: often, office: often, weekends away: sometimes), recently shopped brands (The Row, Toteme, COS, Aritzia), then presents 10 curated product cards for swipe feedback.
+Maya downloads STROBE and signs up via Apple ID. The 7-step onboarding asks age, gender expression (multi-select), sizing, city (pre-filled via IP), lifestyle activities (dinner out: often, office: often, weekends away: sometimes), and recently shopped brands (The Row, Toteme, COS, Aritzia). [P1: swiping of product cards for additional taste vector seeding is deferred post-MVP.]
 
 Her For You feed loads within 3 seconds with products matched to her taste vector. She likes 4 items, dismisses 2, adds 1 to wishlist. Next session, the feed incorporates her signals, with occasion vectors shifted toward dinner and office.
 

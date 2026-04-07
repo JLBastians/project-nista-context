@@ -36,7 +36,8 @@ Page displays: brand name (tappable link to brand filter on search results), ful
 Product detail page displays contextual badges above the title:
 - **New:** Product ingested within 48 hours
 - **Sale:** Product has a sale_price lower than standard price
-- **Match Score:** If personalised to user (≥90% taste vector match), badge shows "90% Match" or similar
+
+> **Internal metric:** Taste vector match scores (how well a product aligns with the user's style) are used internally for personalization ranking and analytics. They are not displayed to users.
 
 ### FR-PD-004 — Size/Variant Selector
 Size/variant selector displays all available sizes as buttons. Out-of-stock sizes are greyed with strikethrough and cannot be selected. Selected size is highlighted with a distinct visual state (outline or filled). Selecting the same size twice deselects it. Size selection is required before "Add to Bag" is enabled; attempting to add without a size triggers a shake animation and error toast.
