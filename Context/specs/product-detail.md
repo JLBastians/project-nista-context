@@ -37,7 +37,7 @@ Product detail page displays contextual badges above the title:
 - **New:** Product ingested within 48 hours
 - **Sale:** Product has a sale_price lower than standard price
 
-> **Internal metric:** Taste vector match scores (how well a product aligns with the user's style) are used internally for personalization ranking and analytics. They are not displayed to users.
+> **Match score display:** Taste vector match scores ≥88% are displayed as a pill on product cards in the feed (see `feed.md` FR-FD-012). Match scores are not displayed on the product detail page itself.
 
 ### FR-PD-004 — Size/Variant Selector
 Size/variant selector displays all available sizes as buttons. Out-of-stock sizes are greyed with strikethrough and cannot be selected. Selected size is highlighted with a distinct visual state (outline or filled). Selecting the same size twice deselects it. Size selection is required before "Add to Bag" is enabled; attempting to add without a size triggers a shake animation and error toast.

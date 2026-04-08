@@ -55,7 +55,15 @@ On render, compare current `product.price` against `price_at_add` stored in `use
 - **Price drop ≥10%:** Display green "Price Dropped" badge overlaid on product image with old price crossed out and new price highlighted
 - **Price unchanged or increased:** No badge displayed
 
-This is a non-intrusive visual signal; no notification is sent (price drop notifications are P1, post-MVP).
+Three surfaces now communicate price drops across the app:
+
+| Surface | Trigger | Display |
+|---------|---------|---------|
+| Bottom nav — Wishlist tab badge | Any saved item's current price < `price_at_add` | Red badge on Wishlist tab icon |
+| Wishlist page banner | Any saved item's current price < `price_at_add` | Green success banner above grid: "{N} item(s) dropped in price" with `TrendingDown` icon |
+| Feed page toast | Same condition; fires once per session on feed mount (1200ms delay) | Toast: "{N} wishlist item(s) dropped in price" with "View" action → `/wishlist` (see `feed.md` FR-FD-014) |
+
+> Push notifications for price drops remain P1, post-MVP.
 
 ---
 

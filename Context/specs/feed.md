@@ -63,15 +63,18 @@ A lightweight toggle row sits directly below the sticky header, never scrolls of
 
 User taps the heart icon on a product card.
 
-- **UI feedback:** Heart fills with brand color (0.2s ease animation)
+- **UI feedback:** Heart scale-bounces 1→1.35→1 (300ms) + red glow pulse (400ms) + haptic vibration. Un-liking produces no animation (heart reverts to outline silently).
 - **Data capture:** Logged to `user_interactions` (type: "like", product_id, weight: 0.8, timestamp)
 - **Feed impact:** Product remains on feed; heart stays filled for remainder of session
 - **Taste vector impact:** Positive signal — product vector weighted +0.8 blended into taste vector at session end
 - **Error state:** If action fails, heart reverts to outline and toast appears: "Action failed. Please try again."
+- **Reduced motion:** Animation disabled when `prefers-reduced-motion: reduce` is set
 
 ### FR-FD-004 — Dismiss Interaction
 
-User long-presses card (≥500ms) or swipes left on product card.
+User swipes left on product card.
+
+> **Note:** Long-press (300ms) no longer triggers dismiss — it opens the Quick-View Drawer (see FR-FD-013). Dismiss is swipe-left only.
 
 - **UI feedback:** Product collapses with fade-out animation (200ms). Undo snackbar appears at bottom: "Not for me — Undo (4s countdown)"
 - **Data capture:** Logged to `user_interactions` (type: "dismiss", product_id, weight: −0.3, timestamp)
@@ -84,13 +87,14 @@ User long-presses card (≥500ms) or swipes left on product card.
 
 User taps the bookmark icon on a product card.
 
-- **UI feedback:** Bookmark fills with brand color (0.2s ease animation)
+- **UI feedback:** Bookmark scale-bounces 1→1.35→1 + blue glow pulse (400ms) + haptic vibration when saving. Removing produces no animation (bookmark reverts to outline silently).
 - **Data capture:** Logged to `user_interactions` (type: "save", product_id, weight: 1.0, timestamp) AND to `user_saved_items` (product_id, saved_at)
 - **Feed impact:** Product remains on feed; bookmark stays filled for remainder of session
 - **Wishlist tab:** Product appears in the user's Wishlist tab
 - **Taste vector impact:** Strong positive signal — product vector weighted +1.0 blended into taste vector at session end
 - **Toggle:** Tapping bookmark again removes the save (bookmark outline, removed from wishlist)
 - **Error state:** If action fails, bookmark reverts and toast shows: "Action failed. Please try again."
+- **Reduced motion:** Animation disabled when `prefers-reduced-motion: reduce` is set
 
 ### FR-FD-006 — Product Detail Navigation
 
@@ -131,6 +135,44 @@ User pulls down on the feed to manually refresh product recommendations.
 - **Visual feedback:** Spinner animation during refresh; "Refreshing..." toast
 - **Duration:** Completes within 1–2 seconds typical
 
+### FR-FD-012 — Match Score Pill
+
+Product cards display a match score pill when the product's score is ≥88% and the user has completed onboarding.
+
+- **Display:** `✦ XX% match` pill positioned bottom-left of card image (`absolute bottom-2 left-2`), styled with semi-transparent canvas background + backdrop blur
+- **Threshold:** Only renders when `matchScore >= 88`. No pill shown for lower scores.
+- **Personalisation gate:** Pill only appears when `isPersonalised === true` (onboarding complete + taste vector seeded). Non-personalised users see no pills anywhere on feed.
+- **Data source:** `matchScore` field on product object (PoC: from mock data; v0: returned by Marqo vector search)
+
+---
+
+### FR-FD-013 — Quick-View Drawer
+
+Users can add a product to their bag without navigating away from the feed.
+
+- **Open triggers:** Long-press on card (≥300ms) OR tap the `+` button in the card's top-right action stack
+- **Short tap:** Still navigates to `/product/[id]` — quick-view does not intercept normal tap
+- **Swipe-left:** Still dismisses the product — quick-view does not intercept swipe
+- **Drawer contents:** Product thumbnail, brand, name, price; size selector buttons; Add to Bag CTA; Wishlist toggle; "View Details" link to PDP
+- **Add to Bag (size selected):** Adds to bag state, shows toast "Added to bag" with "View Bag" action → `/bag`, closes drawer, clears selected size
+- **Add to Bag (no size):** Shake animation on CTA + error toast "Please select a size"; drawer stays open
+- **Dismiss drawer:** Drag down or tap X; no action taken
+- **State tracking:** `gestureTooltipShown` in store tracks whether first-use tooltip has been dismissed (persists via localStorage)
+
+---
+
+### FR-FD-014 — Price Drop Toast (Feed)
+
+On feed mount, if any wishlisted items have a current price below `price_at_add`, a toast fires once per session.
+
+- **Timing:** Fires 1200ms after feed mounts (allows feed content to load first)
+- **Content:** "{N} wishlist item(s) dropped in price" with "View" action → `/wishlist`
+- **Duration:** Toast persists for 5000ms
+- **De-duplication:** Keyed in sessionStorage to prevent repeat toasts within the same browser session. Resets on new session.
+- **Threshold:** Any price reduction qualifies (no minimum percentage for the toast; the wishlist page badge/banner uses the same signal)
+
+---
+
 ### FR-FD-011 — Cold Start & Graduation
 
 **New user (no taste vector or ≤4 meaningful interactions):**
@@ -153,7 +195,8 @@ User pulls down on the feed to manually refresh product recommendations.
 5. User may:
    - **Like:** Tap heart icon → heart fills → interaction logged
    - **Save:** Tap bookmark icon → bookmark fills → interaction logged + product added to wishlist
-   - **Dismiss:** Long-press card ≥500ms or swipe left → product collapses with undo snackbar → interaction logged
+   - **Dismiss:** Swipe left on card → product collapses with undo snackbar → interaction logged
+   - **Quick-view:** Long-press card ≥300ms or tap `+` → quick-view drawer opens (no navigation, no dismiss)
    - **View detail:** Tap card → navigate to `/product/[id]` → interaction logged + dwell time tracked
    - **Filter by occasion:** Tap occasion toggle (e.g. "Going Out") → feed re-queries with occasion sub-vector → interactions update occasion-specific vector
 6. User scrolls down; IntersectionObserver tracks dwell time per card (≥2s logged)

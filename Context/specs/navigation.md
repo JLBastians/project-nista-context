@@ -22,7 +22,7 @@ The authoritative list of all screens in the STROBE v0 application.
 
 | Route | Purpose | Bottom Nav |
 |-------|---------|-----------|
-| `/onboarding` | 5-step style profile seeding (age → gender → city → activities → brands). Swipe mechanic deferred to P1. | No |
+| `/onboarding` | 7-step style profile seeding (welcome → age → gender expression → sizing → city → activities → brands). Swipe mechanic deferred to P1. | No |
 | `/feed` | Personalised discovery feed with occasion filtering (default landing post-login) | Yes |
 | `/search` | Cross-catalogue semantic search with filters, sort, trending/recent | Yes |
 | `/product/[id]` | Product detail — carousel, size selector, Add to Bag, Wishlist, related items | No |
@@ -175,6 +175,7 @@ All animation tokens defined in `globals.css` using `--ease-snap` and `--ease-sp
 |---------|----------|--------|
 | Page load (any route) | 350ms | `--ease-snap` (cubic-bezier 0.25,0,0,1) |
 | Onboarding step transition | 350ms | `--ease-snap` (slide left/right) |
+| Feed → Product Detail (and reverse) | 250ms | Spring — shared element morph via View Transitions API (`viewTransitionName` on card image + hero image). Chrome/Edge only; graceful fade fallback on unsupported browsers. Disabled with `prefers-reduced-motion`. |
 
 ### Component Animations
 
@@ -187,7 +188,10 @@ All animation tokens defined in `globals.css` using `--ease-snap` and `--ease-sp
 | Add to Bag shake | `animate-shake` | 400ms | No size selected error |
 | Onboarding swipe right | Slide right + green glow | 350ms | Right swipe (like) |
 | Onboarding swipe left | Slide left + fade | 350ms | Left swipe (pass) |
-| Feed dismiss | Card collapse upward | 300ms | On dismiss action |
+| Feed dismiss | Card collapse upward | 300ms | On dismiss action (swipe-left) |
+| Like (heart) | Scale bounce 1→1.35→1 + red glow | 300ms | On like (not un-like) |
+| Wishlist (bookmark) | Scale bounce 1→1.35→1 + blue glow | 400ms | On save (not remove) |
+| Quick-view drawer | Slide up from bottom | vaul default | Long-press (300ms) or tap + button on card |
 | Bag item remove | Slide out + collapse | 300ms | On remove |
 | Loading spinner | `animate-spin-slow` | 1s loop | During async operations |
 
