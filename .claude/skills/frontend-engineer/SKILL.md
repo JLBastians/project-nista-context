@@ -118,3 +118,13 @@ See each feature spec's "Error States" section for exact error messages and reco
 3. Check `src/lib/types.ts` for existing type definitions you can reuse.
 4. Check `src/lib/store.tsx` for existing state your feature might need.
 5. Run the dev server locally to test: `npm run dev`
+
+## After You Finish Coding
+
+1. Go to C:\Users\AvantiGomes\Development\.claude\skills\frontend-engineer and check to see if there is an existing changelog file with the current date. If not, create a new file named <yyyymmdd>.md`.
+2. Document changes you made in the changelog file with the following format:
+	- `[Component/Feature Name] - [Short description of the change]`
+	- `[Request] - [Overview of what was asked and reason why if available]`
+	- `[Solution] - [Description of the change]`
+	- `[Files impacted] - [List any files that were updated]`
+	- `[Test] - [Summary of test outcomes]`
