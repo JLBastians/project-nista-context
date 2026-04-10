@@ -41,11 +41,13 @@ For detailed onboarding spec, see `Context/specs/onboarding.md`.
 
 ### Flow 2: Returning User — Login → Feed
 
-**Route:** `/welcome` → `/login` → `/feed`
+**Route:** `/welcome` → `/login` → `/feed` (onboarding complete) or `/onboarding` (onboarding incomplete)
 
 **User taps Sign In on `/welcome`:** Navigates to `/login`.
 
 **User enters email/password (or uses Apple/Google OAuth):** System authenticates, sets `isAuthenticated: true`, redirects to `/feed`.
+
+**Onboarding gate:** `AuthGuard` checks `onboardingComplete` on all authenticated routes. If `onboardingComplete === false` (e.g. user registered but never completed onboarding), they are redirected to `/onboarding` instead of reaching the feed. This ensures the quiz is always completed before the personalised feed is shown, regardless of how the user authenticated.
 
 If email or password is incorrect, show inline error. After 5 failed attempts, form locks with a cooldown message.
 
@@ -77,7 +79,7 @@ For detailed auth spec, see `Context/specs/auth.md`.
 
 **User interacts with products:**
 - **Like (heart icon):** Signals positive preference. Logged as explicit signal (weight 0.8).
-- **Dismiss (long-press or swipe):** Removes card, shows undo snackbar (4 seconds). Logged as negative signal (weight −0.3).
+- **Dismiss (swipe left):** Removes card, shows undo snackbar (4 seconds). Logged as negative signal (weight −0.3). Long-press opens Quick-View Drawer — it no longer triggers dismiss.
 - **Save to wishlist (bookmark icon):** Adds to wishlist, logged as explicit signal (weight 1.0).
 - **Tap product card:** Navigates to `/product/[id]`. Logged as passive signal (weight 0.6).
 - **Dwell time:** Invisible tracking via IntersectionObserver. 2–5 seconds logged (weight 0.15); 5+ seconds logged (weight 0.4).
@@ -262,7 +264,7 @@ For complete signal definitions, weights, and consumption by the engine, see `AR
 
 Key branching logic across the user journey:
 
-**New user vs. returning user** at `/welcome`: Check auth token. If missing, show welcome. If valid, redirect to `/feed`.
+**New user vs. returning user** at `/welcome`: Check auth token. If missing, show welcome. If valid, redirect to `/feed` (if `onboardingComplete === true`) or `/onboarding` (if `onboardingComplete === false`).
 
 **Onboarding completion check:** On first login post-registration, route to `/onboarding`. If user navigates back later via Profile → Edit Preferences, pre-fill prior answers and resume from first incomplete step.
 

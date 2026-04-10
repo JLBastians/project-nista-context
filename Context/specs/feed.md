@@ -150,14 +150,35 @@ Product cards display a match score pill when the product's score is ≥88% and 
 
 Users can add a product to their bag without navigating away from the feed.
 
-- **Open triggers:** Long-press on card (≥300ms) OR tap the `+` button in the card's top-right action stack
+- **Open triggers:** Long-press on card (≥500ms) OR tap the shopping bag button in the card's top-right corner
 - **Short tap:** Still navigates to `/product/[id]` — quick-view does not intercept normal tap
 - **Swipe-left:** Still dismisses the product — quick-view does not intercept swipe
 - **Drawer contents:** Product thumbnail, brand, name, price; size selector buttons; Add to Bag CTA; Wishlist toggle; "View Details" link to PDP
 - **Add to Bag (size selected):** Adds to bag state, shows toast "Added to bag" with "View Bag" action → `/bag`, closes drawer, clears selected size
 - **Add to Bag (no size):** Shake animation on CTA + error toast "Please select a size"; drawer stays open
 - **Dismiss drawer:** Drag down or tap X; no action taken
-- **State tracking:** `gestureTooltipShown` in store tracks whether first-use tooltip has been dismissed (persists via localStorage)
+- **State tracking:** `gestureTutorialComplete` in store tracks whether the first-use interactive gesture tutorial has been completed (persists via localStorage). See FR-FD-015.
+
+---
+
+### FR-FD-015 — Interactive Gesture Tutorial
+
+On a user's first visit to the feed after completing onboarding, a 4-step interactive overlay teaches all feed gestures using a real product card.
+
+- **Trigger:** `gestureTutorialComplete === false` in store AND feed has loaded products. Runs once per account (state persisted in localStorage).
+- **Target:** The first product card in the feed grid is the tutorial target — gestures are real actions, not a sandbox demo.
+- **Step sequence:** Swipe right → Swipe left → Double-tap → Long-press
+- **Per-step behaviour:**
+  - Instruction phase: Coach mark pill above the card shows step title + subtitle + progress dots (e.g. "Swipe right to save / Save items to your wishlist")
+  - Hint phase: After 3 seconds idle, an animated hand SVG appears demonstrating the gesture motion
+  - Confirm phase: On correct gesture, confirmation chip shows ("Saved!", "Dismissed!", "Liked!", "Nice!") for 700ms then advances
+  - Step 2 (swipe-left): Card is NOT dismissed — the product stays in the grid for the remainder of the tutorial
+- **Touch blocking:** Four transparent `pointer-events: auto` panels surround the spotlight card, preventing accidental interaction with the rest of the feed during the tutorial
+- **Skip:** "Skip" button (top-right) dismisses the tutorial at any step and sets `gestureTutorialComplete: true`
+- **Scroll lock:** `document.body.style.overflow = "hidden"` while tutorial is active
+- **Reduced motion:** All animations disabled; hint appears immediately at instruction phase
+- **Completion:** After step 4 confirm, overlay fades out (200ms) and normal feed interaction begins
+- **Migration:** Users who saw the old gesture tooltip (`gestureTooltipShown: true` in localStorage) are treated as tutorial-complete — they will not see the tutorial
 
 ---
 

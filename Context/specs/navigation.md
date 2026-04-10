@@ -91,15 +91,15 @@ BOTTOM NAV (5 tabs, visible on authenticated routes except /onboarding, /product
 | `/register` | Registration form | No | `/feed` (if authenticated) |
 | `/login` | Login form | No | `/feed` (if authenticated) |
 | `/reset-password` | Password reset | No | — |
-| `/onboarding` | Onboarding flow | Yes | `/login` |
-| `/feed` | Personalised feed | Yes | `/login` |
-| `/search` | Search | Yes | `/login` |
-| `/product/[id]` | Product detail | Yes | `/login` |
-| `/bag` | Cart | Yes | `/login` |
-| `/wishlist` | Wishlist | Yes | `/login` |
-| `/orders` | Orders | Yes | `/login` |
-| `/profile` | Profile | Yes | `/login` |
-| `/notifications` | Notifications | Yes | `/login` |
+| `/onboarding` | Onboarding flow | Yes | `/login` (if unauthenticated) |
+| `/feed` | Personalised feed | Yes | `/login` (if unauthenticated); `/onboarding` (if `onboardingComplete === false`) |
+| `/search` | Search | Yes | `/login` (unauthenticated); `/onboarding` (onboarding incomplete) |
+| `/product/[id]` | Product detail | Yes | `/login` (unauthenticated); `/onboarding` (onboarding incomplete) |
+| `/bag` | Cart | Yes | `/login` (unauthenticated); `/onboarding` (onboarding incomplete) |
+| `/wishlist` | Wishlist | Yes | `/login` (unauthenticated); `/onboarding` (onboarding incomplete) |
+| `/orders` | Orders | Yes | `/login` (unauthenticated); `/onboarding` (onboarding incomplete) |
+| `/profile` | Profile | Yes | `/login` (unauthenticated); `/onboarding` (onboarding incomplete) |
+| `/notifications` | Notifications | Yes | `/login` (unauthenticated); `/onboarding` (onboarding incomplete) |
 
 ### 3.2 Deep Links
 
@@ -161,7 +161,7 @@ STROBE is a **mobile-first responsive web app** (Next.js on Vercel). Native iOS/
 |--------|----------|-------|
 | Touch targets | ≥44×44px | WCAG 2.1 AA compliance |
 | Safe areas | iOS notch/home indicator inset | Padding respect on mobile |
-| Gestures | Tap (primary), vertical scroll, swipe left (dismiss), swipe right/left (onboarding) | Desktop: click + drag or button alternatives |
+| Gestures | Tap (navigate to PDP), double-tap (like), vertical scroll, swipe left (dismiss), swipe right (save to wishlist), long-press ≥500ms (quick-view drawer) | Desktop: click + button alternatives; gesture tutorial teaches all 4 gestures on first feed visit |
 
 ---
 
