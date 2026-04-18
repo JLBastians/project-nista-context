@@ -115,7 +115,7 @@ All data lives in Neon serverless PostgreSQL with pgvector 0.8.2 extension. Sche
 
 | Domain | Tables | Purpose |
 |--------|--------|---------|
-| **Product** | `brands`, `products`, `product_tags`, `product_embeddings`, `style_attributes` | Product catalog, enrichment outputs |
+| **Product** | `brands`, `products`, `product_tags`, `product_embeddings`, `style_attributes` | Product catalog, enrichment outputs. `brands` holds one row per Shopify store; `products` carries 15 `shopify_*` columns added April 2026. |
 | **User** | `users`, `user_taste_profiles`, `user_interactions`, `user_saved_items` | User accounts, preferences, interaction history |
 | **Cart** | `carts`, `cart_line_items`, `cart_events`, `confirmed_orders` | Shopping bag state and commerce instrumentation |
 | **Onboarding** | `onboarding_style_items`, `onboarding_brand_selections`, `onboarding_swipe_responses` | Onboarding flow data and style seeding |
@@ -131,18 +131,18 @@ All data lives in Neon serverless PostgreSQL with pgvector 0.8.2 extension. Sche
 Shopify exposes a public GraphQL endpoint without authentication:
 
 ```
-https://{store-name}.myshopify.com/api/2024-01/graphql.json
+https://{store-name}.myshopify.com/api/2026-04/graphql.json
 ```
 
 **What the API returns per product:** Title, description, price, currency, all image URLs, product handle (slug), size/colour variants, collection membership.
 
 **What it does not return:** Inventory levels (not always exposed), payment processing (requires hosted checkout), data from non-Shopify brands.
 
-**Query complexity limit:** 1,000 units per request. Practical throughput: 20–30 products per request with a moderate field set.
+**Query complexity limit:** 1,000 units per request. Practical throughput: ~20 products per request.
 
-**Terms consideration:** Shopify's API terms prohibit permanently warehousing product data. STROBE treats product data as short-lived snapshots with `expires_at` timestamps. Products are re-fetched on a 4–6 hour schedule and expired records are purged. This maintains API compliance.
+**Terms consideration:** Shopify's API terms prohibit permanently warehousing product data. STROBE treats product data as short-lived snapshots with `expires_at` timestamps. Products are re-fetched on a 4–6 hour schedule. This maintains API compliance.
 
-**Current PoC phase:** Myer and Revolve data ingested via custom web scrapers (BeautifulSoup + curl_cffi) to Neon and local PostgreSQL, used for enrichment testing. Custom scrapers will be replaced by Shopify API jobs during Phase 1.
+**Current status (April 2026):** Shopify ingestion pipeline is built and ready for use. Run `python scrapers/shopify_ingest.py --seed-brands` to seed brand configs, enable verified brands in the `brands` table, then run `shopify_ingest.py --brand "Name"` to ingest. The `brands` table holds one row per Shopify store. All Shopify-sourced product columns use a `shopify_` prefix for data provenance. PoC scrapers (Myer, Revolve) remain active for enrichment testing.
 
 ---
 
