@@ -142,7 +142,7 @@ Product cards display a match score pill when the product's score is ≥88% and 
 - **Display:** `✦ XX% match` pill positioned bottom-left of card image (`absolute bottom-2 left-2`), styled with semi-transparent canvas background + backdrop blur
 - **Threshold:** Only renders when `matchScore >= 88`. No pill shown for lower scores.
 - **Personalisation gate:** Pill only appears when `isPersonalised === true` (onboarding complete + taste vector seeded). Non-personalised users see no pills anywhere on feed.
-- **Data source:** `matchScore` field on product object (PoC: from mock data; v0: returned by Marqo vector search)
+- **Data source:** `matchScore` field on product object, returned by `GET /feed` (0–100, computed from pgvector cosine similarity). Marqo vector search will replace the current taste-vector approach in v0.
 
 ---
 
